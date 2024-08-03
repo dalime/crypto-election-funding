@@ -1,0 +1,8 @@
+{
+  "name": "eth-crowd-funding",
+  "version": "1.0.0",
+  "description": "A crowd funding app for the Ethereum blockchain",
+  "main": "index.js",
+  "author": "Danny Lim (dalime)",
+  "license": "MIT"
+}
