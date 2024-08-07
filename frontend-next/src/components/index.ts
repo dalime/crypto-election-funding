@@ -1,3 +1,5 @@
+import CandidateCard from "./CandidateCard";
 import ConnectButton from "./ConnectButton";
+import FundingBar from "./FundingBar";
 
-export { ConnectButton}
+export { CandidateCard, ConnectButton, FundingBar };
