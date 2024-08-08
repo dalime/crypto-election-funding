@@ -8,7 +8,7 @@
   "scripts": {
     "lint:sol": "solhint 'contracts/**/*.sol'",
     "test": "npx hardhat test",
-    "start:frontend": "cd frontend && npm run dev"
+    "start:client": "cd client && npm run dev"
   },
   "type": "module",
   "devDependencies": {
