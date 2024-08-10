@@ -1,3 +1,3 @@
 interface Window {
-  ethereum: import('ethers').providers.ExternalProvider;
+  ethereum: import('wagmi').providers.Provider;
 }
