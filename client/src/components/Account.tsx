@@ -2,11 +2,20 @@ import React from 'react';
 import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi';
 import { Button } from '@nextui-org/react';
 
-function Account(): JSX.Element {
+interface Props {
+  closeShowConnect(): void;
+}
+
+function Account({ closeShowConnect }: Props): JSX.Element {
   const { address } = useAccount();
   const { disconnect } = useDisconnect();
   const { data: ensName } = useEnsName({ address });
   const { data: ensAvatar } = useEnsAvatar({ name: ensName! });
+
+  const handleDisconnect = () => {
+    disconnect();
+    closeShowConnect();
+  };
 
   return (
     <div>

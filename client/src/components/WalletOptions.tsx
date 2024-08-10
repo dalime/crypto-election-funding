@@ -1,10 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Connector, useConnect, useAccount } from 'wagmi';
+import { Connector, useConnect } from 'wagmi';
 import { Button } from '@nextui-org/react';
 
-import Account from './Account';
 import {
   CoinbaseSVG,
   InjectedSVG,
@@ -57,7 +56,7 @@ function WalletOption({
   );
 }
 
-function WalletOptions() {
+export default function WalletOptions() {
   const { connectors, connect } = useConnect();
 
   return connectors.map((connector: Connector) => (
@@ -67,15 +66,4 @@ function WalletOptions() {
       onClick={() => connect({ connector })}
     />
   ));
-}
-
-interface Props {
-  closeShowConnect(): void;
-}
-
-export default function ConnectWallet({ closeShowConnect }: Props) {
-  const { isConnected } = useAccount();
-  if (isConnected)
-    return <Account closeShowConnect={() => closeShowConnect()} />;
-  return <WalletOptions />;
 }

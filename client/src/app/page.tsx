@@ -1,16 +1,26 @@
 'use client';
 
 import { useState } from 'react';
+import { useAccount } from 'wagmi';
 
-import { CandidateCard, ConnectButton, ConnectWallet } from '@/components';
+import {
+  Account,
+  CandidateCard,
+  ConnectButton,
+  ConnectWallet,
+} from '@/components';
 
 export default function Home() {
+  // Hooks
+  const { isConnected } = useAccount();
+
+  // State
   const [showWallets, setShowWallets] = useState<boolean>(false);
 
   return (
     <main className="dark text-foreground bg-background flex min-h-screen flex-col items-center justify-between p-24">
-      {showWallets ? (
-        <ConnectWallet />
+      {showWallets && !isConnected ? (
+        <ConnectWallet closeShowConnect={() => setShowWallets(false)} />
       ) : (
         <>
           <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -19,7 +29,11 @@ export default function Home() {
               <code className="font-mono font-bold">with crypto!</code>
             </p>
             <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-              <ConnectButton onClick={() => setShowWallets(true)} />
+              {isConnected ? (
+                <Account closeShowConnect={() => setShowWallets(false)} />
+              ) : (
+                <ConnectButton onClick={() => setShowWallets(true)} />
+              )}
             </div>
           </div>
 
