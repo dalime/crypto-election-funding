@@ -10,15 +10,16 @@ import {
   Image,
 } from '@nextui-org/react';
 
-import { CandidateDetails } from '@/types';
+import { CandidateDetails, ContractDetails } from '@/types';
 import { trumpDetails, kamalaDetails } from '@/constants/candidateDetails';
 import FundingBar from './FundingBar';
 
 interface props {
   candidate: 'Trump' | 'Kamala';
+  contractDetails: ContractDetails | null;
 }
 
-function CandidateCard({ candidate }: props) {
+function CandidateCard({ candidate, contractDetails }: props) {
   let candidateDetails: CandidateDetails | null = null;
 
   if (candidate === 'Trump') {
@@ -28,6 +29,15 @@ function CandidateCard({ candidate }: props) {
   }
 
   if (!candidateDetails) return <></>;
+
+  const amountDonated =
+    candidate === 'Trump'
+      ? contractDetails?.amountTrump
+      : contractDetails?.amountKamala;
+  const numDonations =
+    candidate === 'Trump'
+      ? contractDetails?.numTrump
+      : contractDetails?.numKamala;
 
   return (
     <Card>
@@ -54,8 +64,12 @@ function CandidateCard({ candidate }: props) {
       <CardFooter>
         <div className="flex flex-row gap-4">
           <Button>Support</Button>
-          <h3>$40,0000 Raised</h3>
-          <h3>$1,000 Donations</h3>
+          {contractDetails && (
+            <>
+              <h3>{amountDonated} Raised</h3>
+              <h3>{numDonations} Donations</h3>
+            </>
+          )}
         </div>
       </CardFooter>
     </Card>

@@ -1,21 +1,52 @@
 'use client';
 
 import { useState } from 'react';
-import { useAccount } from 'wagmi';
+import { useAccount, useReadContract } from 'wagmi';
+import { mainnet, sepolia } from 'viem/chains';
 
+import { ContractDetails } from '@/types';
 import {
   Account,
   CandidateCard,
   ConnectButton,
   ConnectWallet,
 } from '@/components';
+import { abi } from '@/abis/crowdfunding-abi';
+import { config } from '@/app/config';
 
 export default function Home() {
+  const contractAddress =
+    (process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}` | undefined) ??
+    '0x0000000000000000000000000000000000000000';
+  config.setState((x) => ({
+    ...x,
+    chainId: x.current ? x.chainId : mainnet.id,
+  }));
+
   // Hooks
   const { isConnected } = useAccount();
+  const result = useReadContract({
+    abi,
+    address: contractAddress,
+    functionName: 'readDetails',
+    config,
+    chainId: sepolia.id,
+  });
 
   // State
   const [showWallets, setShowWallets] = useState<boolean>(false);
+
+  const resultDataArr: any = result.data;
+
+  const resultData: ContractDetails | null =
+    result && result.data && (result.data as BigInt[]).length === 4
+      ? {
+          amountTrump: Number(resultDataArr[0]),
+          numTrump: Number(resultDataArr[1]),
+          amountKamala: Number(resultDataArr[2]),
+          numKamala: Number(resultDataArr[3]),
+        }
+      : null;
 
   return (
     <main className="dark text-foreground bg-background flex min-h-screen flex-col items-center justify-between p-24">
@@ -38,8 +69,14 @@ export default function Home() {
           </div>
 
           <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-2 lg:text-center">
-            <CandidateCard candidate="Trump" />
-            <CandidateCard candidate="Kamala" />
+            <CandidateCard
+              candidate="Trump"
+              contractDetails={result && result.data ? resultData : null}
+            />
+            <CandidateCard
+              candidate="Kamala"
+              contractDetails={result && result.data ? resultData : null}
+            />
           </div>
         </>
       )}

@@ -6,3 +6,10 @@ export interface CandidateDetails {
   age: number;
   stanceOnCrypto: string;
 }
+
+export interface ContractDetails {
+  amountTrump: number;
+  amountKamala: number;
+  numTrump: number;
+  numKamala: number;
+}

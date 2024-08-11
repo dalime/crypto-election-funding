@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "lint:sol": "solhint 'contracts/**/*.sol'",
+    "deploy": "npx hardhat run scripts/deploy.js",
     "test": "npx hardhat test",
     "start:client": "cd client && npm run dev"
   },
