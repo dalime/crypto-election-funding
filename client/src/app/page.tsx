@@ -10,6 +10,7 @@ import {
   CandidateCard,
   ConnectButton,
   ConnectWallet,
+  FundingBar,
 } from '@/components';
 import { abi } from '@/abis/crowdfunding-abi';
 import { config } from '@/app/config';
@@ -68,7 +69,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-2 lg:text-center">
+          <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-2 lg:text-center mt-4">
             <CandidateCard
               candidate="Trump"
               contractDetails={result && result.data ? resultData : null}

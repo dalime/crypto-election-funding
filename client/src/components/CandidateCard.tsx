@@ -2,18 +2,16 @@
 
 import React from 'react';
 import {
-  Button,
   Card,
   CardHeader,
   CardBody,
   CardFooter,
   Image,
 } from '@nextui-org/react';
-import { parseUnits, formatUnits } from 'viem';
+import { formatUnits } from 'viem';
 
 import { CandidateDetails, ContractDetails } from '@/types';
 import { trumpDetails, kamalaDetails } from '@/constants/candidateDetails';
-import FundingBar from './FundingBar';
 import SupportButton from './SupportButton';
 
 interface props {
@@ -42,39 +40,40 @@ function CandidateCard({ candidate, contractDetails }: props) {
       : contractDetails?.numKamala;
 
   const weiDonated = BigInt(amountDonated || '');
-  const etherDonated = formatUnits(weiDonated, 18);
+  const ethDonated = formatUnits(weiDonated, 18);
 
   return (
     <Card>
       <CardHeader>
-        <h2>{candidateDetails.name}</h2>
+        <h2 className="font-bold text-2xl mt-2">{candidateDetails.name}</h2>
       </CardHeader>
       <CardBody>
-        <div className="flex flex-row gap-4 justify-between align-middle">
-          <div>
-            <Image
-              src={candidateDetails.image}
-              width={500}
-              height={571}
-              style={{ width: 500, height: 'auto', zIndex: 2 }}
-            />
-            <h3>{candidateDetails.party}</h3>
-            <h3>Age: {candidateDetails.age}</h3>
-            <h3>Stance on Crypto</h3>
-            <p>{candidateDetails.stanceOnCrypto}</p>
-          </div>
-          <FundingBar />
-        </div>
+        <Image
+          src={candidateDetails.image}
+          width={500}
+          height={571}
+          style={{ width: 500, height: 'auto', zIndex: 2 }}
+        />
+        <h3 className="font-bold text-xl mb-3 mt-3">
+          {candidateDetails.party}
+        </h3>
+        <h3 className="font-bold text-large mb-3">
+          Age: {candidateDetails.age}
+        </h3>
+        <p className="mb-2">
+          <span className="font-bold">Stance on Crypto: </span>
+          {candidateDetails.stanceOnCrypto}
+        </p>
       </CardBody>
       <CardFooter>
-        <div className="flex flex-row gap-4 justify-between items-center w-full">
+        <div className="flex flex-row gap-4 justify-between items-center w-full m-2">
           <SupportButton candidate={candidate} />
           {contractDetails && (
             <>
-              <h3>{etherDonated} ETH Raised</h3>
+              <h3>{ethDonated} ETH Raised</h3>
               <h3>
                 {numDonations} Donation
-                {numDonations && numDonations > 1 ? 's' : ''}
+                {!numDonations || numDonations !== 1 ? 's' : ''}
               </h3>
             </>
           )}
