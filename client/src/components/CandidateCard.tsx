@@ -10,10 +10,15 @@ import {
 } from '@nextui-org/react';
 import { formatUnits } from 'viem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDemocrat, faRepublican } from '@fortawesome/free-solid-svg-icons';
+import {
+  faDemocrat,
+  faRepublican,
+  faBitcoinSign,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { CandidateDetails, ContractDetails } from '@/types';
 import { trumpDetails, kamalaDetails } from '@/constants/candidateDetails';
+import { roundTo6Decimals } from '@/utils';
 import SupportButton from './SupportButton';
 import FundingBar from './FundingBar';
 
@@ -51,13 +56,13 @@ function CandidateCard({ candidate, contractDetails }: props) {
         <h2 className="font-bold text-2xl mt-2">{candidateDetails.name}</h2>
       </CardHeader>
       <CardBody>
-        <div className="flex flex-row gap-2 justify-between items-end h-full">
+        <div className="flex flex-row gap-2 justify-between items-start h-full">
           <div className="flex flex-col justify-start items-start">
             <Image
               src={candidateDetails.image}
               width={500}
               height={571}
-              style={{ width: 500, height: 'auto', zIndex: 2 }}
+              style={{ width: 500, height: 570, zIndex: 2, objectFit: 'cover' }}
             />
             <h3 className="font-bold text-xl mb-3 mt-3">
               {candidateDetails.party}{' '}
@@ -70,12 +75,19 @@ function CandidateCard({ candidate, contractDetails }: props) {
               Age: {candidateDetails.age}
             </h3>
             <p className="mb-2">
-              <span className="font-bold">Stance on Crypto: </span>
+              <span className="font-bold">
+                Stance on Crypto
+                <FontAwesomeIcon
+                  icon={faBitcoinSign}
+                  style={{ marginLeft: 5 }}
+                />
+                :{' '}
+              </span>
               {candidateDetails.stanceOnCrypto}
             </p>
           </div>
           <FundingBar
-            amount={parseInt(ethDonated, 10)}
+            amount={parseFloat(ethDonated)}
             num={numDonations}
             candidate={candidate}
           />
@@ -86,7 +98,10 @@ function CandidateCard({ candidate, contractDetails }: props) {
           <SupportButton candidate={candidate} />
           {contractDetails && (
             <>
-              <h3>{ethDonated} ETH Raised</h3>
+              <h3>
+                {ethDonated ? roundTo6Decimals(parseFloat(ethDonated)) : 0} ETH
+                Raised
+              </h3>
               <h3>
                 {numDonations} Donation
                 {!numDonations || numDonations !== 1 ? 's' : ''}
