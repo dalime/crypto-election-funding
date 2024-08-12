@@ -69,6 +69,7 @@ function CandidateCard({ candidate, contractDetails }: props) {
               <FontAwesomeIcon
                 icon={candidate === 'Trump' ? faRepublican : faDemocrat}
                 style={{ marginLeft: 5 }}
+                color={candidate === 'Trump' ? '#e9252b' : '#1fb1f4'}
               />
             </h3>
             <h3 className="font-bold text-large mb-3">
@@ -80,6 +81,7 @@ function CandidateCard({ candidate, contractDetails }: props) {
                 <FontAwesomeIcon
                   icon={faBitcoinSign}
                   style={{ marginLeft: 5 }}
+                  color="#F2A900"
                 />
                 :{' '}
               </span>

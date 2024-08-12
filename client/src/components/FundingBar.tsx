@@ -14,12 +14,10 @@ function FundingBar({
   num: number | undefined;
   candidate: 'Trump' | 'Kamala';
 }) {
-  console.log('candidate', candidate, 'amount', amount, ', max: ', 1);
-
   return (
     <Slider
       size="md"
-      color={candidate === 'Trump' ? 'danger' : 'primary'}
+      color="success"
       step={0.0001}
       maxValue={1}
       value={amount}

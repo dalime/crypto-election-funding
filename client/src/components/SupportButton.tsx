@@ -15,6 +15,8 @@ import {
   ModalFooter,
   Input,
 } from '@nextui-org/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDemocrat, faRepublican } from '@fortawesome/free-solid-svg-icons';
 
 import { abi } from '@/abis/crowdfunding-abi';
 
@@ -120,10 +122,12 @@ function SupportButton({ candidate }: { candidate: 'Trump' | 'Kamala' }) {
   }
 
   return (
-    <Button
-      color={candidate === 'Trump' ? 'danger' : 'primary'}
-      onClick={() => setModalOpen(true)}
-    >
+    <Button color="success" onClick={() => setModalOpen(true)}>
+      <FontAwesomeIcon
+        icon={candidate === 'Trump' ? faRepublican : faDemocrat}
+        style={{ marginLeft: 5 }}
+        color="#000000"
+      />
       Support
     </Button>
   );

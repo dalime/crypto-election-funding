@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi';
-import { Button } from '@nextui-org/react';
+import { Button, Code } from '@nextui-org/react';
 
 interface Props {
   closeShowConnect(): void;
@@ -18,9 +18,20 @@ function Account({ closeShowConnect }: Props): JSX.Element {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+      }}
+    >
       {ensAvatar ? <img src={ensAvatar} alt="ENS Avatar" /> : <></>}
-      {address && <p>{ensName ? `${ensName} (${address})` : address}</p>}
+      {address && (
+        <Code style={{ marginBottom: 10 }}>
+          {ensName ? `${ensName} (${address})` : address}
+        </Code>
+      )}
       <Button color="primary" onClick={() => disconnect()}>
         Disconnect
       </Button>
