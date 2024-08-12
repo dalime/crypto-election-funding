@@ -9,10 +9,12 @@ import {
   CardFooter,
   Image,
 } from '@nextui-org/react';
+import { parseUnits, formatUnits } from 'viem';
 
 import { CandidateDetails, ContractDetails } from '@/types';
 import { trumpDetails, kamalaDetails } from '@/constants/candidateDetails';
 import FundingBar from './FundingBar';
+import SupportButton from './SupportButton';
 
 interface props {
   candidate: 'Trump' | 'Kamala';
@@ -39,6 +41,9 @@ function CandidateCard({ candidate, contractDetails }: props) {
       ? contractDetails?.numTrump
       : contractDetails?.numKamala;
 
+  const weiDonated = BigInt(amountDonated || '');
+  const etherDonated = formatUnits(weiDonated, 18);
+
   return (
     <Card>
       <CardHeader>
@@ -62,12 +67,15 @@ function CandidateCard({ candidate, contractDetails }: props) {
         </div>
       </CardBody>
       <CardFooter>
-        <div className="flex flex-row gap-4">
-          <Button>Support</Button>
+        <div className="flex flex-row gap-4 justify-between items-center w-full">
+          <SupportButton candidate={candidate} />
           {contractDetails && (
             <>
-              <h3>{amountDonated} Raised</h3>
-              <h3>{numDonations} Donations</h3>
+              <h3>{etherDonated} ETH Raised</h3>
+              <h3>
+                {numDonations} Donation
+                {numDonations && numDonations > 1 ? 's' : ''}
+              </h3>
             </>
           )}
         </div>

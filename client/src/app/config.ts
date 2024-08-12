@@ -9,7 +9,7 @@ export const config = createConfig({
   connectors: [
     injected(),
     walletConnect({ projectId }),
-    metaMask(),
+    metaMask({ infuraAPIKey: process.env.NEXT_PUBLIC_INFURA_ID }),
     safe(),
   ],
   transports: {
