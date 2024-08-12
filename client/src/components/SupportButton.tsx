@@ -83,10 +83,10 @@ function SupportButton({ candidate }: { candidate: 'Trump' | 'Kamala' }) {
               </ModalHeader>
               <ModalBody>
                 <Input
-                  label="Amount"
+                  label="Amount in ETH"
                   type="number"
                   name="ethAmount"
-                  placeholder="Enter amount"
+                  placeholder="Enter amount in ETH"
                   value={amount ? amount.toString() : undefined}
                   onChange={(e) => setAmount(e.target.valueAsNumber)}
                 />
@@ -102,13 +102,13 @@ function SupportButton({ candidate }: { candidate: 'Trump' | 'Kamala' }) {
               <ModalFooter>
                 <Button
                   disabled={isPending}
-                  color="danger"
+                  color="default"
                   variant="light"
                   onPress={onClose}
                 >
                   Close
                 </Button>
-                <Button disabled={isPending} color="primary" type="submit">
+                <Button disabled={isPending} color="success" type="submit">
                   Support
                 </Button>
               </ModalFooter>
@@ -119,7 +119,14 @@ function SupportButton({ candidate }: { candidate: 'Trump' | 'Kamala' }) {
     );
   }
 
-  return <Button onClick={() => setModalOpen(true)}>Support</Button>;
+  return (
+    <Button
+      color={candidate === 'Trump' ? 'danger' : 'primary'}
+      onClick={() => setModalOpen(true)}
+    >
+      Support
+    </Button>
+  );
 }
 
 export default SupportButton;

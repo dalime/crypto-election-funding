@@ -9,10 +9,13 @@ import {
   Image,
 } from '@nextui-org/react';
 import { formatUnits } from 'viem';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDemocrat, faRepublican } from '@fortawesome/free-solid-svg-icons';
 
 import { CandidateDetails, ContractDetails } from '@/types';
 import { trumpDetails, kamalaDetails } from '@/constants/candidateDetails';
 import SupportButton from './SupportButton';
+import FundingBar from './FundingBar';
 
 interface props {
   candidate: 'Trump' | 'Kamala';
@@ -48,22 +51,35 @@ function CandidateCard({ candidate, contractDetails }: props) {
         <h2 className="font-bold text-2xl mt-2">{candidateDetails.name}</h2>
       </CardHeader>
       <CardBody>
-        <Image
-          src={candidateDetails.image}
-          width={500}
-          height={571}
-          style={{ width: 500, height: 'auto', zIndex: 2 }}
-        />
-        <h3 className="font-bold text-xl mb-3 mt-3">
-          {candidateDetails.party}
-        </h3>
-        <h3 className="font-bold text-large mb-3">
-          Age: {candidateDetails.age}
-        </h3>
-        <p className="mb-2">
-          <span className="font-bold">Stance on Crypto: </span>
-          {candidateDetails.stanceOnCrypto}
-        </p>
+        <div className="flex flex-row gap-2 justify-between items-end h-full">
+          <div className="flex flex-col justify-start items-start">
+            <Image
+              src={candidateDetails.image}
+              width={500}
+              height={571}
+              style={{ width: 500, height: 'auto', zIndex: 2 }}
+            />
+            <h3 className="font-bold text-xl mb-3 mt-3">
+              {candidateDetails.party}{' '}
+              <FontAwesomeIcon
+                icon={candidate === 'Trump' ? faRepublican : faDemocrat}
+                style={{ marginLeft: 5 }}
+              />
+            </h3>
+            <h3 className="font-bold text-large mb-3">
+              Age: {candidateDetails.age}
+            </h3>
+            <p className="mb-2">
+              <span className="font-bold">Stance on Crypto: </span>
+              {candidateDetails.stanceOnCrypto}
+            </p>
+          </div>
+          <FundingBar
+            amount={parseInt(ethDonated, 10)}
+            num={numDonations}
+            candidate={candidate}
+          />
+        </div>
       </CardBody>
       <CardFooter>
         <div className="flex flex-row gap-4 justify-between items-center w-full m-2">
