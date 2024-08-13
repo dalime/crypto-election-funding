@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Card,
   CardHeader,
@@ -50,6 +50,20 @@ function CandidateCard({ candidate, contractDetails }: props) {
   const weiDonated = BigInt(amountDonated || '');
   const ethDonated = formatUnits(weiDonated, 18);
 
+  const [amount, setAmount] = useState<number>(parseFloat(ethDonated));
+  const [num, setNum] = useState<number>(numDonations || 0);
+
+  useEffect(() => {
+    setAmount(parseFloat(ethDonated));
+    setNum(numDonations || 0);
+  }, [ethDonated, numDonations]);
+
+  const updateCandidateDetails = (newDonation: number): void => {
+    const newAmount = parseFloat(ethDonated) + newDonation;
+    setAmount(newAmount);
+    setNum(num + 1);
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -88,25 +102,21 @@ function CandidateCard({ candidate, contractDetails }: props) {
               {candidateDetails.stanceOnCrypto}
             </p>
           </div>
-          <FundingBar
-            amount={parseFloat(ethDonated)}
-            num={numDonations}
-            candidate={candidate}
-          />
+          <FundingBar amount={amount} num={num} candidate={candidate} />
         </div>
       </CardBody>
       <CardFooter>
         <div className="flex flex-row gap-4 justify-between items-center w-full m-2">
-          <SupportButton candidate={candidate} />
+          <SupportButton
+            candidate={candidate}
+            updateCandidateDetails={updateCandidateDetails}
+          />
           {contractDetails && (
             <>
+              <h3>{amount ? roundTo6Decimals(amount) : 0} ETH Raised</h3>
               <h3>
-                {ethDonated ? roundTo6Decimals(parseFloat(ethDonated)) : 0} ETH
-                Raised
-              </h3>
-              <h3>
-                {numDonations} Donation
-                {!numDonations || numDonations !== 1 ? 's' : ''}
+                {num} Donation
+                {!num || num !== 1 ? 's' : ''}
               </h3>
             </>
           )}

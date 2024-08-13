@@ -20,7 +20,13 @@ import { faDemocrat, faRepublican } from '@fortawesome/free-solid-svg-icons';
 
 import { abi } from '@/abis/crowdfunding-abi';
 
-function SupportButton({ candidate }: { candidate: 'Trump' | 'Kamala' }) {
+function SupportButton({
+  candidate,
+  updateCandidateDetails,
+}: {
+  candidate: 'Trump' | 'Kamala';
+  updateCandidateDetails: (amount: number) => void;
+}) {
   // Hooks
   const {
     data: hash,
@@ -42,6 +48,7 @@ function SupportButton({ candidate }: { candidate: 'Trump' | 'Kamala' }) {
   useEffect(() => {
     if (isConfirmed) {
       setModalOpen(false);
+      if (amount && candidate) updateCandidateDetails(parseFloat(amount.toString()));
     }
   }, [isConfirmed]);
 
@@ -74,8 +81,8 @@ function SupportButton({ candidate }: { candidate: 'Trump' | 'Kamala' }) {
     }
   };
 
-  if (modalOpen) {
-    return (
+  return (
+    <>
       <Modal isOpen={modalOpen} onOpenChange={() => setModalOpen(!modalOpen)}>
         <ModalContent>
           {(onClose) => (
@@ -118,18 +125,19 @@ function SupportButton({ candidate }: { candidate: 'Trump' | 'Kamala' }) {
           )}
         </ModalContent>
       </Modal>
-    );
-  }
-
-  return (
-    <Button color="success" onClick={() => setModalOpen(true)}>
-      <FontAwesomeIcon
-        icon={candidate === 'Trump' ? faRepublican : faDemocrat}
-        style={{ marginLeft: 5 }}
-        color="#000000"
-      />
-      Support
-    </Button>
+      <Button
+        disabled={modalOpen}
+        color="success"
+        onClick={() => setModalOpen(true)}
+      >
+        <FontAwesomeIcon
+          icon={candidate === 'Trump' ? faRepublican : faDemocrat}
+          style={{ marginLeft: 5 }}
+          color="#000000"
+        />
+        Support
+      </Button>
+    </>
   );
 }
 

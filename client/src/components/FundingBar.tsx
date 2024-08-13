@@ -18,7 +18,7 @@ function FundingBar({
     <Slider
       size="md"
       color="success"
-      step={0.0001}
+      step={0.000001}
       maxValue={1}
       value={amount}
       minValue={0}

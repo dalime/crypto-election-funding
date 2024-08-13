@@ -16,6 +16,7 @@ import { abi } from '@/abis/crowdfunding-abi';
 import { config } from '@/app/config';
 
 export default function Home() {
+  // Constants
   const contractAddress =
     (process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}` | undefined) ??
     '0x0000000000000000000000000000000000000000';
@@ -38,7 +39,6 @@ export default function Home() {
   const [showWallets, setShowWallets] = useState<boolean>(false);
 
   const resultDataArr: any = result.data;
-
   const resultData: ContractDetails | null =
     result && result.data && (result.data as BigInt[]).length === 4
       ? {

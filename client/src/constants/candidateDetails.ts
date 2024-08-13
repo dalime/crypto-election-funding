@@ -15,6 +15,6 @@ export const kamalaDetails = {
   party: 'Democratic Party',
   description: 'Democratic Party Candidate',
   age: calculateAge('1964-10-20'),
-  stanceOnCrypto: 'Kamala Harris has not taken a definitive public stance on cryptocurrency. However, recent developments suggest a possible shift in her position. As the U.S. Vice President and potential Democratic presidential nominee, Harris has shown signs of openness towards engaging with the cryptocurrency community. Her campaign has started reaching out to crypto representatives, indicating a willingness to explore the sector\'s potential and policy implications.',
+  stanceOnCrypto: 'Kamala Harris has not taken a definitive public stance on cryptocurrency. However, recent developments suggest a possible shift in her position. As the U.S. Vice President and Democratic presidential nominee, Harris has shown signs of openness towards engaging with the cryptocurrency community. Her campaign has started reaching out to crypto representatives, indicating a willingness to explore the sector\'s potential and policy implications.',
 };
 
