@@ -50,14 +50,13 @@ export default function Home() {
       : null;
 
   return (
-    <main className="dark text-foreground bg-background flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="dark text-foreground bg-background flex min-h-screen flex-col items-center justify-between p-12">
       <ConnectWallet modalOpen={showWallets} setModalOpen={setShowWallets} />
       <div className="z-10 w-full items-center justify-between font-mono text-sm lg:flex">
-        <h1 className="text-xl font-bold fixed left-0 top-0 flex w-full justify-center pb-6 pt-8 lg:static lg:w-auto ">
-          Support a presidential candidate with&nbsp;
-          <code className="font-mono font-bold">Crypto!</code>
+        <h1 className="text-xl font-bold left-0 top-0 flex w-full justify-center pb-6 pt-8 lg:static lg:w-auto ">
+          Support a presidential candidate with Crypto!
         </h1>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
+        <div className="fixed top-7 right-7 flex w-full items-end justify-end lg:static lg:size-auto lg:bg-none">
           {isConnected ? (
             <Account />
           ) : (

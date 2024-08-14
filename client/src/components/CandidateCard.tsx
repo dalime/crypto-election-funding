@@ -7,6 +7,7 @@ import {
   CardBody,
   CardFooter,
   Image,
+  Button,
 } from '@nextui-org/react';
 import { formatUnits } from 'viem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +15,10 @@ import {
   faDemocrat,
   faRepublican,
   faBitcoinSign,
+  faCaretDown,
+  faCaretUp,
 } from '@fortawesome/free-solid-svg-icons';
+import { useMediaQuery } from 'react-responsive';
 
 import { CandidateDetails, ContractDetails } from '@/types';
 import { trumpDetails, kamalaDetails } from '@/constants/candidateDetails';
@@ -28,16 +32,20 @@ interface props {
 }
 
 function CandidateCard({ candidate, contractDetails }: props) {
+  // Conditional Rendering for candidate details
   let candidateDetails: CandidateDetails | null = null;
-
   if (candidate === 'Trump') {
     candidateDetails = trumpDetails;
   } else if (candidate === 'Kamala') {
     candidateDetails = kamalaDetails;
   }
-
   if (!candidateDetails) return <></>;
 
+  // Hooks
+  const isMobile = useMediaQuery({ query: '(max-width: 500px)' });
+  const isTablet = useMediaQuery({ query: '(max-width: 1024px)' });
+
+  // Constants
   const amountDonated =
     candidate === 'Trump'
       ? contractDetails?.amountTrump
@@ -50,45 +58,58 @@ function CandidateCard({ candidate, contractDetails }: props) {
   const weiDonated = BigInt(amountDonated || '');
   const ethDonated = formatUnits(weiDonated, 18);
 
+  // State
   const [amount, setAmount] = useState<number>(parseFloat(ethDonated));
   const [num, setNum] = useState<number>(numDonations || 0);
+  const [mobileStanceExpanded, setMobileStanceExpanded] =
+    useState<boolean>(false);
 
+  // Effects
   useEffect(() => {
     setAmount(parseFloat(ethDonated));
     setNum(numDonations || 0);
   }, [ethDonated, numDonations]);
 
+  /**
+   * Updates the amount and number of donations for the candidate
+   * @param newDonation number
+   */
   const updateCandidateDetails = (newDonation: number): void => {
     const newAmount = parseFloat(ethDonated) + newDonation;
     setAmount(newAmount);
     setNum(num + 1);
   };
 
+  const { name, age, party, stanceOnCrypto, image } = candidateDetails;
+
   return (
     <Card>
       <CardHeader>
-        <h2 className="font-bold text-2xl mt-2">{candidateDetails.name}</h2>
+        <h2 className="font-bold text-2xl mt-2">{name}</h2>
       </CardHeader>
       <CardBody>
         <div className="flex flex-row gap-2 justify-between items-start h-full">
           <div className="flex flex-col justify-start items-start">
             <Image
-              src={candidateDetails.image}
+              src={image}
               width={500}
               height={571}
-              style={{ width: 500, height: 570, zIndex: 2, objectFit: 'cover' }}
+              style={{
+                width: isMobile ? 250 : isTablet ? 300 : 500,
+                height: isMobile ? 285 : isTablet ? 342 : 570,
+                zIndex: 2,
+                objectFit: 'cover',
+              }}
             />
             <h3 className="font-bold text-xl mb-3 mt-3">
-              {candidateDetails.party}{' '}
+              {party}{' '}
               <FontAwesomeIcon
                 icon={candidate === 'Trump' ? faRepublican : faDemocrat}
                 style={{ marginLeft: 5 }}
                 color={candidate === 'Trump' ? '#e9252b' : '#1fb1f4'}
               />
             </h3>
-            <h3 className="font-bold text-large mb-3">
-              Age: {candidateDetails.age}
-            </h3>
+            <h3 className="font-bold text-large mb-3">Age: {age}</h3>
             <p className="mb-2">
               <span className="font-bold">
                 Stance on Crypto
@@ -99,7 +120,21 @@ function CandidateCard({ candidate, contractDetails }: props) {
                 />
                 :{' '}
               </span>
-              {candidateDetails.stanceOnCrypto}
+              <Button
+                onClick={() => setMobileStanceExpanded(!mobileStanceExpanded)}
+                variant="bordered"
+                color="primary"
+                size="sm"
+                style={{ width: 'fit-content', height: 'fit-content' }}
+              >
+                <FontAwesomeIcon
+                  icon={mobileStanceExpanded ? faCaretUp : faCaretDown}
+                  size="xl"
+                />
+              </Button>
+              {isTablet && mobileStanceExpanded === false
+                ? `${stanceOnCrypto.substring(0, 100)}...`
+                : stanceOnCrypto}
             </p>
           </div>
           <FundingBar amount={amount} num={num} candidate={candidate} />
