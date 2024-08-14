@@ -53,7 +53,7 @@ export default function Home() {
 
   return (
     <main
-      className={`dark text-foreground bg-background flex min-h-screen flex-col items-center justify-between p-${isMobile ? 6 : isTablet ? 10 : 12}`}
+      className={`dark text-foreground bg-background flex min-h-screen flex-col items-center justify-between p-${isMobile ? 6 : isTablet ? 10 : 24}`}
     >
       <ConnectWallet modalOpen={showWallets} setModalOpen={setShowWallets} />
       <div className="z-10 w-full items-center justify-between font-mono text-sm lg:flex">
@@ -90,7 +90,7 @@ export default function Home() {
           contractDetails={result && result.data ? resultData : null}
         />
       </div>
-      <footer className="mt-10">
+      <footer className={isMobile ? 'mt-5' : 'mt-10'}>
         <p>
           Created by Danny Lim{' '}
           <a href="https://github.com/dalime" target="_blank">

@@ -56,7 +56,12 @@ function WalletOption({
   };
 
   return (
-    <Button color="default" disabled={!ready} onClick={onClick}>
+    <Button
+      color="default"
+      disabled={!ready}
+      onClick={onClick}
+      className="text-left"
+    >
       {renderIcon(connector)}
       {connector.name}
     </Button>
