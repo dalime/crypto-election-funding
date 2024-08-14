@@ -2,18 +2,13 @@
 
 import React from 'react';
 import { Slider } from '@nextui-org/react';
+import { useMediaQuery } from 'react-responsive';
 
 import { roundTo6Decimals } from '@/utils';
 
-function FundingBar({
-  amount,
-  num,
-  candidate,
-}: {
-  amount: number | undefined;
-  num: number | undefined;
-  candidate: 'Trump' | 'Kamala';
-}) {
+function FundingBar({ amount }: { amount: number | undefined }) {
+  const isMobile = useMediaQuery({ query: '(max-width: 500px)' });
+
   return (
     <Slider
       size="md"
@@ -26,8 +21,19 @@ function FundingBar({
       aria-label="Temperature"
       defaultValue={0}
       hideThumb
-      startContent={<label style={{ whiteSpace: 'nowrap' }}>1 ETH</label>}
-      endContent={<label>{amount ? roundTo6Decimals(amount) : 0} ETH</label>}
+      startContent={
+        <label
+          className={isMobile ? 'text-xs' : ''}
+          style={{ whiteSpace: 'nowrap' }}
+        >
+          1 ETH
+        </label>
+      }
+      endContent={
+        <label className={isMobile ? 'text-sm' : ''}>
+          {amount ? roundTo6Decimals(amount) : 0} ETH
+        </label>
+      }
     />
   );
 }

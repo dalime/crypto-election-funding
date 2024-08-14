@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useAccount, useReadContract } from 'wagmi';
 import { mainnet, sepolia } from 'viem/chains';
+import { useMediaQuery } from 'react-responsive';
 
 import { ContractDetails } from '@/types';
 import {
@@ -10,7 +11,6 @@ import {
   CandidateCard,
   ConnectButton,
   ConnectWallet,
-  FundingBar,
 } from '@/components';
 import { abi } from '@/abis/crowdfunding-abi';
 import { config } from '@/app/config';
@@ -34,6 +34,8 @@ export default function Home() {
     config,
     chainId: sepolia.id,
   });
+  const isMobile = useMediaQuery({ query: '(max-width: 500px)' });
+  const isTablet = useMediaQuery({ query: '(max-width: 1024px)' });
 
   // State
   const [showWallets, setShowWallets] = useState<boolean>(false);
@@ -50,13 +52,24 @@ export default function Home() {
       : null;
 
   return (
-    <main className="dark text-foreground bg-background flex min-h-screen flex-col items-center justify-between p-12">
+    <main
+      className={`dark text-foreground bg-background flex min-h-screen flex-col items-center justify-between p-${isMobile ? 6 : isTablet ? 10 : 12}`}
+    >
       <ConnectWallet modalOpen={showWallets} setModalOpen={setShowWallets} />
       <div className="z-10 w-full items-center justify-between font-mono text-sm lg:flex">
-        <h1 className="text-xl font-bold left-0 top-0 flex w-full justify-center pb-6 pt-8 lg:static lg:w-auto ">
+        <h1
+          className={`text-xl font-bold left-0 top-0 flex w-full justify-center pb-6 pt-8 lg:static lg:w-auto${isMobile ? ' hidden' : isTablet ? ' mt-32' : ''}`}
+        >
           Support a presidential candidate with Crypto!
         </h1>
-        <div className="fixed top-7 right-7 flex w-full items-end justify-end lg:static lg:size-auto lg:bg-none">
+        <div
+          className={`fixed top-0 right-0 flex w-full items-${isMobile ? 'center' : 'end'} justify-end lg:static lg:size-auto lg:bg-none bg-background p-7 z-50`}
+        >
+          {isMobile && (
+            <h1 className={`text-sma font-bold`}>
+              Support a presidential candidate with Crypto!
+            </h1>
+          )}
           {isConnected ? (
             <Account />
           ) : (
@@ -65,7 +78,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:grid-cols-2 lg:text-center mt-4 gap-5">
+      <div
+        className={`mb-10 grid text-center lg:mb-0 lg:w-full lg:grid-cols-2 lg:text-center mt-4 gap-5${isMobile ? ' mt-32' : ''}`}
+      >
         <CandidateCard
           candidate="Trump"
           contractDetails={result && result.data ? resultData : null}
@@ -75,6 +90,14 @@ export default function Home() {
           contractDetails={result && result.data ? resultData : null}
         />
       </div>
+      <footer className="mt-10">
+        <p>
+          Created by Danny Lim{' '}
+          <a href="https://github.com/dalime" target="_blank">
+            (dalime)
+          </a>
+        </p>
+      </footer>
     </main>
   );
 }

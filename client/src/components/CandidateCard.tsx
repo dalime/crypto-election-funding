@@ -84,12 +84,14 @@ function CandidateCard({ candidate, contractDetails }: props) {
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="z-0">
         <h2 className="font-bold text-2xl mt-2">{name}</h2>
       </CardHeader>
       <CardBody>
-        <div className="flex flex-row gap-2 justify-between items-start h-full">
-          <div className="flex flex-col justify-start items-start">
+        <div
+          className={`flex flex-row gap-${isMobile ? 1 : 2} justify-between items-start h-full`}
+        >
+          <div className="flex flex-col justify-start items-start p-3">
             <Image
               src={image}
               width={500}
@@ -120,10 +122,15 @@ function CandidateCard({ candidate, contractDetails }: props) {
                 />
                 :{' '}
               </span>
+              {isTablet && mobileStanceExpanded === false
+                ? `${stanceOnCrypto.substring(0, 100)}...`
+                : stanceOnCrypto}
+            </p>
+            {isTablet && (
               <Button
                 onClick={() => setMobileStanceExpanded(!mobileStanceExpanded)}
                 variant="bordered"
-                color="primary"
+                color="default"
                 size="sm"
                 style={{ width: 'fit-content', height: 'fit-content' }}
               >
@@ -132,12 +139,9 @@ function CandidateCard({ candidate, contractDetails }: props) {
                   size="xl"
                 />
               </Button>
-              {isTablet && mobileStanceExpanded === false
-                ? `${stanceOnCrypto.substring(0, 100)}...`
-                : stanceOnCrypto}
-            </p>
+            )}
           </div>
-          <FundingBar amount={amount} num={num} candidate={candidate} />
+          <FundingBar amount={amount} />
         </div>
       </CardBody>
       <CardFooter>

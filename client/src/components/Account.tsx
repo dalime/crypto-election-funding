@@ -1,12 +1,18 @@
 import React from 'react';
 import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi';
 import { Button, Code } from '@nextui-org/react';
+import { useMediaQuery } from 'react-responsive';
+
+import { shortenAddress } from '@/utils';
 
 function Account(): JSX.Element {
   const { address } = useAccount();
   const { disconnect } = useDisconnect();
   const { data: ensName } = useEnsName({ address });
   const { data: ensAvatar } = useEnsAvatar({ name: ensName! });
+  const isMobile = useMediaQuery({ query: '(max-width: 500px)' });
+
+  const ethAddress = isMobile && address ? shortenAddress(address) : address;
 
   return (
     <div
@@ -15,12 +21,13 @@ function Account(): JSX.Element {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'flex-end',
+        width: '100%',
       }}
     >
       {ensAvatar ? <img src={ensAvatar} alt="ENS Avatar" /> : <></>}
-      {address && (
+      {ethAddress && (
         <Code style={{ marginBottom: 10 }}>
-          {ensName ? `${ensName} (${address})` : address}
+          {ensName ? `${ensName} (${ethAddress})` : ethAddress}
         </Code>
       )}
       <Button color="primary" onClick={() => disconnect()}>
