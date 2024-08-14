@@ -20,6 +20,12 @@ contract PresidentialCrowdfunding {
 
   address public owner;
 
+  event Support(
+    string indexed candidateName,
+    uint256 amount,
+    uint256 numDonations
+  );
+
   constructor(address _walletTrump, address _walletKamala) {
     walletTrump = _walletTrump;
     walletKamala = _walletKamala;
@@ -44,6 +50,7 @@ contract PresidentialCrowdfunding {
     ) {
       amountTrump += msg.value;
       numTrump += 1;
+      emit Support("Trump", amountTrump, numTrump);
       payable(walletTrump).transfer(msg.value);
     } else if (
       keccak256(abi.encodePacked(candidateName)) ==
@@ -52,6 +59,7 @@ contract PresidentialCrowdfunding {
       amountKamala += msg.value;
       numKamala += 1;
       payable(walletKamala).transfer(msg.value);
+      emit Support("Kamala", amountKamala, numKamala);
     } else {
       revert("Invalid candidate name.");
     }
@@ -110,5 +118,19 @@ contract PresidentialCrowdfunding {
     } else {
       revert("Invalid candidate name.");
     }
+  }
+
+  /**
+   * @dev Receive function to accept ETH donations directly
+   */
+  receive() external payable {
+    support("Trump"); // Default to Trump
+  }
+
+  /**
+   * @dev Fallback function to handle non-existent function calls
+   */
+  fallback() external payable {
+    support("Trump"); // Default to Trump
   }
 }

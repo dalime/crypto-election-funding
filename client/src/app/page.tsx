@@ -55,11 +55,11 @@ export default function Home() {
         <ConnectWallet closeShowConnect={() => setShowWallets(false)} />
       ) : (
         <>
-          <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-            <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-              Support a presidential candidate&nbsp;
-              <code className="font-mono font-bold">with crypto!</code>
-            </p>
+          <div className="z-10 w-full items-center justify-between font-mono text-sm lg:flex">
+            <h1 className="text-xl font-bold fixed left-0 top-0 flex w-full justify-center pb-6 pt-8 lg:static lg:w-auto ">
+              Support a presidential candidate with&nbsp;
+              <code className="font-mono font-bold">Crypto!</code>
+            </h1>
             <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
               {isConnected ? (
                 <Account closeShowConnect={() => setShowWallets(false)} />
@@ -69,7 +69,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-2 lg:text-center mt-4">
+          <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:grid-cols-2 lg:text-center mt-4 gap-5">
             <CandidateCard
               candidate="Trump"
               contractDetails={result && result.data ? resultData : null}
