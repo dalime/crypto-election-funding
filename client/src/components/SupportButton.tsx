@@ -5,6 +5,7 @@ import {
   type BaseError,
   useWriteContract,
   useWaitForTransactionReceipt,
+  useAccount,
 } from 'wagmi';
 import {
   Button,
@@ -19,6 +20,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDemocrat, faRepublican } from '@fortawesome/free-solid-svg-icons';
 
 import { abi } from '@/abis/crowdfunding-abi';
+import ConnectWallet from './ConnectWallet';
 
 function SupportButton({
   candidate,
@@ -39,6 +41,7 @@ function SupportButton({
     useWaitForTransactionReceipt({
       hash,
     });
+  const { isConnected } = useAccount();
 
   // State
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -48,7 +51,8 @@ function SupportButton({
   useEffect(() => {
     if (isConfirmed) {
       setModalOpen(false);
-      if (amount && candidate) updateCandidateDetails(parseFloat(amount.toString()));
+      if (amount && candidate)
+        updateCandidateDetails(parseFloat(amount.toString()));
     }
   }, [isConfirmed]);
 
@@ -83,48 +87,53 @@ function SupportButton({
 
   return (
     <>
-      <Modal isOpen={modalOpen} onOpenChange={() => setModalOpen(!modalOpen)}>
-        <ModalContent>
-          {(onClose) => (
-            <form onSubmit={handleSupport}>
-              <ModalHeader className="flex flex-col gap-1">
-                Send ETH to {candidateFullName}'s Campaign
-              </ModalHeader>
-              <ModalBody>
-                <Input
-                  label="Amount in ETH"
-                  type="number"
-                  name="ethAmount"
-                  placeholder="Enter amount in ETH"
-                  value={amount ? amount.toString() : undefined}
-                  onChange={(e) => setAmount(e.target.valueAsNumber)}
-                />
-                {hash && <div>Transaction Hash: {hash}</div>}
-                {isConfirming && <div>Waiting for confirmation...</div>}
-                {isConfirmed && <div>Transaction confirmed.</div>}
-                {error && (
-                  <div>
-                    Error: {(error as BaseError).shortMessage || error.message}
-                  </div>
-                )}
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  disabled={isPending}
-                  color="default"
-                  variant="light"
-                  onPress={onClose}
-                >
-                  Close
-                </Button>
-                <Button disabled={isPending} color="success" type="submit">
-                  Support
-                </Button>
-              </ModalFooter>
-            </form>
-          )}
-        </ModalContent>
-      </Modal>
+      {isConnected ? (
+        <Modal isOpen={modalOpen} onOpenChange={() => setModalOpen(!modalOpen)}>
+          <ModalContent>
+            {(onClose) => (
+              <form onSubmit={handleSupport}>
+                <ModalHeader className="flex flex-col gap-1">
+                  Send ETH to {candidateFullName}'s Campaign
+                </ModalHeader>
+                <ModalBody>
+                  <Input
+                    label="Amount in ETH"
+                    type="number"
+                    name="ethAmount"
+                    placeholder="Enter amount in ETH"
+                    value={amount ? amount.toString() : undefined}
+                    onChange={(e) => setAmount(e.target.valueAsNumber)}
+                  />
+                  {hash && <div>Transaction Hash: {hash}</div>}
+                  {isConfirming && <div>Waiting for confirmation...</div>}
+                  {isConfirmed && <div>Transaction confirmed.</div>}
+                  {error && (
+                    <div>
+                      Error:{' '}
+                      {(error as BaseError).shortMessage || error.message}
+                    </div>
+                  )}
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    disabled={isPending}
+                    color="default"
+                    variant="light"
+                    onPress={onClose}
+                  >
+                    Close
+                  </Button>
+                  <Button disabled={isPending} color="success" type="submit">
+                    Support
+                  </Button>
+                </ModalFooter>
+              </form>
+            )}
+          </ModalContent>
+        </Modal>
+      ) : (
+        <ConnectWallet modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      )}
       <Button
         disabled={modalOpen}
         color="success"

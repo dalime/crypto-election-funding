@@ -2,9 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { Connector, useConnect, useAccount } from 'wagmi';
-import { Button } from '@nextui-org/react';
+import {
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from '@nextui-org/react';
 
-import Account from './Account';
 import {
   CoinbaseSVG,
   InjectedSVG,
@@ -57,25 +63,48 @@ function WalletOption({
   );
 }
 
-function WalletOptions() {
+interface WalletOptionsProps {
+  modalOpen: boolean;
+  setModalOpen(b: boolean): void;
+}
+
+function WalletOptions({ modalOpen, setModalOpen }: WalletOptionsProps) {
+  // Hooks
   const { connectors, connect } = useConnect();
 
-  return connectors.map((connector: Connector) => (
-    <WalletOption
-      key={connector.uid}
-      connector={connector}
-      onClick={() => connect({ connector })}
-    />
-  ));
+  return (
+    <Modal isOpen={modalOpen} onOpenChange={() => setModalOpen(!modalOpen)}>
+      <ModalContent>
+        <ModalHeader className="flex flex-col gap-1">
+          Connect Wallet
+        </ModalHeader>
+        <ModalBody>
+          {connectors.map((connector: Connector) => (
+            <WalletOption
+              key={connector.uid}
+              connector={connector}
+              onClick={() => connect({ connector })}
+            />
+          ))}
+        </ModalBody>
+        <ModalFooter></ModalFooter>
+      </ModalContent>
+    </Modal>
+  );
 }
 
 interface Props {
-  closeShowConnect(): void;
+  modalOpen: boolean;
+  setModalOpen(b: boolean): void;
 }
 
-export default function ConnectWallet({ closeShowConnect }: Props) {
+export default function ConnectWallet({ modalOpen, setModalOpen }: Props) {
   const { isConnected } = useAccount();
-  if (isConnected)
-    return <Account closeShowConnect={() => closeShowConnect()} />;
-  return <WalletOptions />;
+  if (isConnected) return <></>;
+  return (
+    <WalletOptions
+      modalOpen={isConnected ? false : modalOpen}
+      setModalOpen={setModalOpen}
+    />
+  );
 }
