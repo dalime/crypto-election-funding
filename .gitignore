@@ -28,3 +28,6 @@ yarn-error.log
 
 # Local error
 nohup.out
+
+# VS Code
+.vscode
