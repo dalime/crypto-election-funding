@@ -1,5 +1,5 @@
 import Account from "./Account";
-import CandidateCard from "./CandidateCard";
+import CandidateCard from "./Candidate/CandidateCard";
 import ConnectButton from "./ConnectButton";
 import ConnectWallet from "./ConnectWallet";
 import FundingBar from "./FundingBar";
