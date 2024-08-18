@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Code } from '@nextui-org/react';
+import { Button, Code, Tooltip } from '@nextui-org/react';
 
 function ConnectButton({
   isConnecting,
@@ -9,7 +9,7 @@ function ConnectButton({
   onClick: () => void;
 }) {
   return (
-    <div>
+    <div className="flex flex-col justify-center items-end w-full">
       {isConnecting && (
         <>
           {/* <img
@@ -24,7 +24,14 @@ function ConnectButton({
               borderRadius: '50%',
             }}
           /> */}
-          <Code style={{ marginBottom: 10 }}>Loading...</Code>
+          <Tooltip content="">
+            <Code
+              style={{ marginBottom: 10, cursor: 'pointer' }}
+              onClick={() => {}}
+            >
+              Loading...
+            </Code>
+          </Tooltip>
         </>
       )}
       <Button

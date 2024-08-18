@@ -8,11 +8,14 @@ import {
   Input,
   Button,
   Progress,
+  Code,
+  Tooltip,
 } from '@nextui-org/react';
 import { type WriteContractErrorType } from '@wagmi/core';
 import { type BaseError } from 'wagmi';
 
-import { shortenAddress } from '@/utils';
+import { shortenAddress, copyAddress } from '@/utils';
+import { CopySVG } from '@/assets/svg';
 
 interface SupportModalProps {
   candidateFullName: string;
@@ -68,7 +71,31 @@ const SupportModal: React.FC<SupportModalProps> = ({
             {hash && (
               <div className="w-full max-w-full">
                 <p>Transaction Hash:</p>
-                <code>{shortenAddress(hash, 11)}</code>
+                <Tooltip content="View on Etherscan">
+                  <Code
+                    style={{ cursor: 'pointer' }}
+                    onClick={() =>
+                      window.open(
+                        `https://sepolia.etherscan.io/tx/${hash}`,
+                        '_blank',
+                        'noopener,noreferrer'
+                      )
+                    }
+                  >
+                    {shortenAddress(hash, 11)}
+                  </Code>
+                </Tooltip>
+                <Tooltip content="Copy address">
+                  <Button
+                    isIconOnly
+                    color="default"
+                    onClick={() => copyAddress(hash)}
+                  >
+                    <CopySVG
+                      style={{ width: 18, height: 18, color: '#ffffff' }}
+                    />
+                  </Button>
+                </Tooltip>
               </div>
             )}
             {isConfirming && (

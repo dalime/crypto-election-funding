@@ -3,11 +3,11 @@ import {
   useAccount,
   useDisconnect,
   // useEnsAvatar,
-  useEnsName
+  useEnsName,
 } from 'wagmi';
-import { Button, Code } from '@nextui-org/react';
+import { Button, Code, Tooltip } from '@nextui-org/react';
 
-import { shortenAddress } from '@/utils';
+import { shortenAddress, copyAddress } from '@/utils';
 
 function Account(): JSX.Element {
   // Hooks
@@ -17,12 +17,22 @@ function Account(): JSX.Element {
   // const { data: ensAvatar } = useEnsAvatar({ name: ensName! });
 
   // State to track if we're on the client side
-  const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState<boolean>(false);
+  const [addressCopied, setAddressCopied] = useState<boolean>(false);
 
   // Set the isClient flag when the component mounts on the client side
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  // Handle copying the address
+  const handleCopy = () => {
+    if (isClient && isConnected && address) {
+      copyAddress(address);
+      setAddressCopied(true);
+      setTimeout(() => setAddressCopied(false), 2000); // Reset after 2 seconds
+    }
+  };
 
   // Render consistent content during SSR and client-side hydration
   const ethAddress = address ? shortenAddress(address) : '';
@@ -45,13 +55,28 @@ function Account(): JSX.Element {
           borderRadius: '50%',
         }}
       /> */}
-      <Code style={{ marginBottom: 10 }}>
-        {isClient && isConnected
-          ? ensName
-            ? `${ensName} (${ethAddress})`
-            : ethAddress
-          : 'Loading...'}
-      </Code>
+      <Tooltip
+        content={
+          isClient && isConnected
+            ? addressCopied
+              ? 'Copied!'
+              : 'Copy address'
+            : ''
+        }
+      >
+        <Code
+          style={{ marginBottom: 10, cursor: 'pointer' }}
+          onClick={() =>
+            isClient && isConnected && address ? handleCopy() : {}
+          }
+        >
+          {isClient && isConnected
+            ? ensName
+              ? `${ensName} (${ethAddress})`
+              : ethAddress
+            : 'Loading...'}
+        </Code>
+      </Tooltip>
       <Button color="primary" className="w-fit" onClick={() => disconnect()}>
         Disconnect
       </Button>
