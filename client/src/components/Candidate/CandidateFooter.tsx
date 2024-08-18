@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ContractDetails } from '@/types';
 import { roundTo6Decimals } from '@/utils';
-import SupportButton from '../SupportButton';
+import SupportButton from '../Support/SupportButton';
 
 interface Props {
   candidate: 'Trump' | 'Kamala';

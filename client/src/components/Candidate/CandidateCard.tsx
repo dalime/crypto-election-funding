@@ -1,17 +1,14 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Button } from '@nextui-org/react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/react';
 import { formatUnits } from 'viem';
 import { useMediaQuery } from 'react-responsive';
 
 import { ContractDetails } from '@/types';
 import { useCandidateDetails } from '@/hooks/useCandidateDetails';
-import { roundTo6Decimals } from '@/utils';
-import SupportButton from '../SupportButton';
 import FundingBar from '../FundingBar';
 import CandidateInfo from './CandidateInfo';
-import StanceOnCrypto from './StanceOnCrypto';
 import CandidateFooter from './CandidateFooter';
 
 interface Props {
@@ -58,7 +55,9 @@ function CandidateCard({ candidate, contractDetails }: Props) {
         <h2 className="font-bold text-2xl mt-2">{candidateDetails.name}</h2>
       </CardHeader>
       <CardBody>
-        <div className={`flex flex-row gap-${isMobile ? 1 : 2} justify-between items-start h-full`}>
+        <div
+          className={`flex flex-row gap-${isMobile ? 1 : 2} justify-between items-start h-full`}
+        >
           <CandidateInfo
             details={candidateDetails}
             isMobile={isMobile}

@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAccount, useReadContract } from 'wagmi';
 import { mainnet, sepolia } from 'viem/chains';
-import { useMediaQuery } from 'react-responsive';
 
 import { ContractDetails } from '@/types';
 import {
@@ -34,11 +33,18 @@ export default function Home() {
     config,
     chainId: sepolia.id,
   });
-  const isMobile = useMediaQuery({ query: '(max-width: 500px)' });
-  const isTablet = useMediaQuery({ query: '(max-width: 1024px)' });
 
   // State
   const [showWallets, setShowWallets] = useState<boolean>(false);
+  const [isClient, setIsClient] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    setIsMobile(window.innerWidth <= 500);
+    setIsTablet(window.innerWidth <= 1024 && window.innerWidth > 500);
+  }, []);
 
   const resultDataArr: any = result.data;
   const resultData: ContractDetails | null =
@@ -53,20 +59,26 @@ export default function Home() {
 
   return (
     <main
-      className={`dark text-foreground bg-background flex min-h-screen flex-col items-center justify-between p-${isMobile ? 6 : isTablet ? 10 : 24}`}
+      className={`dark text-foreground bg-background flex min-h-screen flex-col items-center justify-between ${
+        isClient ? `p-${isMobile ? 6 : isTablet ? 10 : 24}` : 'p-24'
+      }`}
     >
       <ConnectWallet modalOpen={showWallets} setModalOpen={setShowWallets} />
       <div className="z-10 w-full items-center justify-between font-mono text-sm lg:flex">
         <h1
-          className={`text-xl font-bold left-0 top-0 flex w-full justify-center pb-6 pt-8 lg:static lg:w-auto${isMobile ? ' hidden' : isTablet ? ' mt-32' : ''}`}
+          className={`text-xl font-bold left-0 top-0 flex w-full justify-center pb-6 pt-8 lg:static lg:w-auto ${
+            isClient ? (isMobile ? 'hidden' : isTablet ? 'mt-32' : '') : ''
+          }`}
         >
           Support a presidential candidate with Crypto!
         </h1>
         <div
-          className={`fixed top-0 right-0 flex w-full items-${isMobile ? 'center' : 'end'} justify-end lg:static lg:size-auto lg:bg-none bg-background p-7 z-50`}
+          className={`fixed top-0 right-0 flex w-full items-${
+            isClient ? (isMobile ? 'center' : 'end') : 'end'
+          } justify-end lg:static lg:size-auto lg:bg-none bg-background p-7 z-50`}
         >
-          {isMobile && (
-            <h1 className={`text-sma font-bold`}>
+          {isClient && isMobile && (
+            <h1 className="text-sma font-bold">
               Support a presidential candidate with Crypto!
             </h1>
           )}
@@ -79,7 +91,9 @@ export default function Home() {
       </div>
 
       <div
-        className={`mb-10 grid text-center lg:mb-0 lg:w-full sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 lg:text-center gap-5${isMobile ? ' mt-32' : 'mt-4'}`}
+        className={`mb-10 grid text-center lg:mb-0 lg:w-full sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 lg:text-center gap-5 ${
+          isClient ? (isMobile ? 'mt-32' : 'mt-4') : 'mt-4'
+        }`}
       >
         <CandidateCard
           candidate="Trump"
@@ -90,7 +104,7 @@ export default function Home() {
           contractDetails={result && result.data ? resultData : null}
         />
       </div>
-      <footer className={isMobile ? 'mt-5' : 'mt-10'}>
+      <footer className={isClient && isMobile ? 'mt-5' : 'mt-10'}>
         <p>
           Created by Danny Lim{' '}
           <a href="https://github.com/dalime" target="_blank">

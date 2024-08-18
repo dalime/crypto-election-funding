@@ -1,9 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Connector, useConnect, useAccount } from 'wagmi';
+import { Connector, useConnect } from 'wagmi';
 import {
-  Button,
   Modal,
   ModalContent,
   ModalHeader,
