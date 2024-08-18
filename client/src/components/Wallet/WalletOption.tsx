@@ -1,5 +1,3 @@
-'use client';
-
 import { useState, useEffect } from 'react';
 import { Connector } from 'wagmi';
 import { Button } from '@nextui-org/react';
@@ -21,8 +19,11 @@ export default function WalletOption({
   onClick: () => void;
 }) {
   const [ready, setReady] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
+
     (async () => {
       const provider = await connector.getProvider();
       setReady(!!provider);
@@ -55,7 +56,7 @@ export default function WalletOption({
       onClick={onClick}
       className="text-left"
     >
-      {renderIcon(connector)}
+      {isClient ? renderIcon(connector) : null}
       {connector.name}
     </Button>
   );

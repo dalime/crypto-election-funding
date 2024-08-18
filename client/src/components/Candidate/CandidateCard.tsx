@@ -1,9 +1,6 @@
-'use client';
-
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/react';
 import { formatUnits } from 'viem';
-import { useMediaQuery } from 'react-responsive';
 
 import { ContractDetails } from '@/types';
 import { useCandidateDetails } from '@/hooks/useCandidateDetails';
@@ -20,31 +17,36 @@ function CandidateCard({ candidate, contractDetails }: Props) {
   const candidateDetails = useCandidateDetails(candidate);
   if (!candidateDetails) return null;
 
-  const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
-  const isTablet = useMediaQuery({ query: '(max-width: 1024px)' });
-
-  const amountDonated =
-    candidate === 'Trump'
-      ? contractDetails?.amountTrump
-      : contractDetails?.amountKamala;
-  const numDonations =
-    candidate === 'Trump'
-      ? contractDetails?.numTrump
-      : contractDetails?.numKamala;
-
-  const weiDonated = BigInt(amountDonated || '');
-  const ethDonated = formatUnits(weiDonated, 18);
-
-  const [amount, setAmount] = useState<number>(parseFloat(ethDonated));
-  const [num, setNum] = useState<number>(numDonations || 0);
+  const [isClient, setIsClient] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+  const [amount, setAmount] = useState<number>(0);
+  const [num, setNum] = useState<number>(0);
 
   useEffect(() => {
-    setAmount(parseFloat(ethDonated));
-    setNum(numDonations || 0);
-  }, [ethDonated, numDonations]);
+    setIsClient(true);
+
+    // Check for media queries on client-side
+    setIsMobile(window.innerWidth <= 640);
+    setIsTablet(window.innerWidth <= 1024 && window.innerWidth > 640);
+
+    const weiDonated = BigInt(
+      candidate === 'Trump'
+        ? contractDetails?.amountTrump || ''
+        : contractDetails?.amountKamala || ''
+    );
+    const ethDonated = parseFloat(formatUnits(weiDonated, 18));
+
+    setAmount(ethDonated);
+    setNum(
+      candidate === 'Trump'
+        ? contractDetails?.numTrump || 0
+        : contractDetails?.numKamala || 0
+    );
+  }, [candidate, contractDetails]);
 
   const updateCandidateDetails = (newDonation: number): void => {
-    const newAmount = parseFloat(ethDonated) + newDonation;
+    const newAmount = amount + newDonation;
     setAmount(newAmount);
     setNum(num + 1);
   };
@@ -55,16 +57,22 @@ function CandidateCard({ candidate, contractDetails }: Props) {
         <h2 className="font-bold text-2xl mt-2">{candidateDetails.name}</h2>
       </CardHeader>
       <CardBody>
-        <div
-          className={`flex flex-row gap-${isMobile ? 1 : 2} justify-between items-start h-full`}
-        >
-          <CandidateInfo
-            details={candidateDetails}
-            isMobile={isMobile}
-            isTablet={isTablet}
-          />
-          <FundingBar amount={amount} />
-        </div>
+        {isClient ? (
+          <div
+            className={`flex flex-row gap-${isMobile ? 1 : 2} justify-between items-start h-full`}
+          >
+            <CandidateInfo
+              details={candidateDetails}
+              isMobile={isMobile}
+              isTablet={isTablet}
+            />
+            <FundingBar amount={amount} />
+          </div>
+        ) : (
+          <div className="flex flex-row justify-between items-start h-full">
+            <div>Loading...</div>
+          </div>
+        )}
       </CardBody>
       <CardFooter>
         <CandidateFooter

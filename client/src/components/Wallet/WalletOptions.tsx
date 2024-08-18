@@ -1,5 +1,3 @@
-'use client';
-
 import { Connector, useConnect } from 'wagmi';
 import {
   Modal,

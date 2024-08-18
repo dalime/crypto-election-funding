@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { Slider } from '@nextui-org/react';
 import { useMediaQuery } from 'react-responsive';

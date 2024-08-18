@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi';
 import { Button, Code } from '@nextui-org/react';

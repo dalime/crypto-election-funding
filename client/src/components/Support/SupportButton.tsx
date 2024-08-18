@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { Button } from '@nextui-org/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,7 +18,14 @@ const SupportButton: React.FC<SupportButtonProps> = ({
   updateCandidateDetails,
 }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [isClient, setIsClient] = useState(false);
   const { isConnected } = useAccount();
+
+  // Ensure that client-only logic runs after the component mounts
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const candidateFullName =
     candidate === 'Trump' ? 'Donald Trump' : 'Kamala Harris';
 
@@ -32,6 +39,10 @@ const SupportButton: React.FC<SupportButtonProps> = ({
     error,
     handleSupport,
   } = useSupportCandidate(candidate, updateCandidateDetails);
+
+  if (!isClient) {
+    return <Button disabled>Loading...</Button>;
+  }
 
   return (
     <>

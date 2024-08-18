@@ -1,3 +1,4 @@
+// app/page.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -17,8 +18,9 @@ import { config } from '@/app/config';
 export default function Home() {
   // Constants
   const contractAddress =
-    (process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}` | undefined) ??
+    process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ??
     '0x0000000000000000000000000000000000000000';
+
   config.setState((x) => ({
     ...x,
     chainId: x.current ? x.chainId : mainnet.id,
@@ -28,7 +30,7 @@ export default function Home() {
   const { isConnected } = useAccount();
   const result = useReadContract({
     abi,
-    address: contractAddress,
+    address: contractAddress as `0x${string}`,
     functionName: 'readDetails',
     config,
     chainId: sepolia.id,
