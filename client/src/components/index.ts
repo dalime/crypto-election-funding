@@ -1,8 +1,7 @@
 import Account from "./Account";
 import CandidateCard from "./Candidate/CandidateCard";
-import ConnectButton from "./ConnectButton";
-import ConnectWallet from "./ConnectWallet";
+import ConnectButton from "./Wallet/ConnectButton";
+import ConnectWallet from "./Wallet/ConnectWallet";
 import FundingBar from "./FundingBar";
-import WalletOptions from "./WalletOptions";
 
-export { Account, CandidateCard, ConnectButton, ConnectWallet, FundingBar, WalletOptions };
+export { Account, CandidateCard, ConnectButton, ConnectWallet, FundingBar };

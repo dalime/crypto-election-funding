@@ -15,22 +15,29 @@ function Account(): JSX.Element {
   const ethAddress = isMobile && address ? shortenAddress(address) : address;
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'flex-end',
-        width: '100%',
-      }}
-    >
-      {ensAvatar ? <img src={ensAvatar} alt="ENS Avatar" /> : <></>}
+    <div className="flex flex-col justify-center items-end w-full">
+      {ensAvatar ? (
+        <img
+          src={ensAvatar}
+          alt="ENS Avatar"
+          width="40"
+          height="40"
+          style={{
+            width: 40,
+            height: 40,
+            objectFit: 'cover',
+            borderRadius: '50%',
+          }}
+        />
+      ) : (
+        <></>
+      )}
       {ethAddress && (
         <Code style={{ marginBottom: 10 }}>
           {ensName ? `${ensName} (${ethAddress})` : ethAddress}
         </Code>
       )}
-      <Button color="primary" onClick={() => disconnect()}>
+      <Button color="primary" className="w-fit" onClick={() => disconnect()}>
         Disconnect
       </Button>
     </div>

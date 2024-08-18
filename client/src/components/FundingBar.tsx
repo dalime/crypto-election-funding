@@ -7,6 +7,7 @@ import { useMediaQuery } from 'react-responsive';
 import { roundTo6Decimals } from '@/utils';
 
 function FundingBar({ amount }: { amount: number | undefined }) {
+  // Hooks
   const isMobile = useMediaQuery({ query: '(max-width: 500px)' });
 
   return (

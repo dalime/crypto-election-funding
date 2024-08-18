@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Connector, useConnect } from 'wagmi';
+import { Connector } from 'wagmi';
 import { Button } from '@nextui-org/react';
 
 import {
@@ -13,7 +13,7 @@ import {
   WalletConnectSVG,
 } from '@/assets/svg';
 
-function WalletOption({
+export default function WalletOption({
   connector,
   onClick,
 }: {
@@ -49,21 +49,14 @@ function WalletOption({
   };
 
   return (
-    <Button color="default" disabled={!ready} onClick={onClick}>
+    <Button
+      color="default"
+      disabled={!ready}
+      onClick={onClick}
+      className="text-left"
+    >
       {renderIcon(connector)}
       {connector.name}
     </Button>
   );
-}
-
-export default function WalletOptions() {
-  const { connectors, connect } = useConnect();
-
-  return connectors.map((connector: Connector) => (
-    <WalletOption
-      key={connector.uid}
-      connector={connector}
-      onClick={() => connect({ connector })}
-    />
-  ));
 }

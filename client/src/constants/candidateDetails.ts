@@ -1,5 +1,6 @@
 import { calculateAge } from "@/utils";
 
+// Donald Trump Details
 export const trumpDetails = {
   image: '/trump.png',
   name: 'Donald Trump',
@@ -9,6 +10,7 @@ export const trumpDetails = {
   stanceOnCrypto: 'Donald Trump has shifted from a previously critical stance on cryptocurrencies to a supportive one. At the Bitcoin 2024 conference, he announced a set of pro-crypto policies, including creating a U.S. bitcoin reserve, establishing a crypto advisory council, and enacting crypto-friendly regulations. He also criticized the current administration’s regulatory approach and vowed to remove officials like SEC Chair Gary Gensler, who has been tough on crypto enforcement. Trump\'s campaign now actively embraces the crypto industry, signaling a significant change in his approach.',
 };
 
+// Kamala Harris Details
 export const kamalaDetails = {
   image: '/kamala.png',
   name: 'Kamala Harris',
