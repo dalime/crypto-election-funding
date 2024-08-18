@@ -18,7 +18,8 @@ contract PresidentialCrowdfunding {
   address public walletTrump; // Wallet address for Trump
   address public walletKamala; // Wallet address for Kamala
 
-  address public owner;
+  address public owner; // Owner's wallet address
+  uint256 public constant FEE_PERCENTAGE = 3; // Fee percentage for Dapp (3%)
 
   event Support(
     string indexed candidateName,
@@ -44,22 +45,28 @@ contract PresidentialCrowdfunding {
   function support(string memory candidateName) public payable {
     require(msg.value > 0, "Donation must be greater than zero.");
 
+    uint256 fee = (msg.value * FEE_PERCENTAGE) / 100; // Calculate the fee
+    uint256 donationAmount = msg.value - fee; // Remaining amount after fee
+
+    // Transfer the fee to the owner's wallet
+    payable(owner).transfer(fee);
+
     if (
       keccak256(abi.encodePacked(candidateName)) ==
       keccak256(abi.encodePacked("Trump"))
     ) {
-      amountTrump += msg.value;
+      amountTrump += donationAmount;
       numTrump += 1;
       emit Support("Trump", amountTrump, numTrump);
-      payable(walletTrump).transfer(msg.value);
+      payable(walletTrump).transfer(donationAmount);
     } else if (
       keccak256(abi.encodePacked(candidateName)) ==
       keccak256(abi.encodePacked("Kamala"))
     ) {
-      amountKamala += msg.value;
+      amountKamala += donationAmount;
       numKamala += 1;
-      payable(walletKamala).transfer(msg.value);
       emit Support("Kamala", amountKamala, numKamala);
+      payable(walletKamala).transfer(donationAmount);
     } else {
       revert("Invalid candidate name.");
     }
