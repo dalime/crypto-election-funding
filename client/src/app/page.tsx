@@ -79,7 +79,7 @@ export default function Home() {
       </div>
 
       <div
-        className={`mb-10 grid text-center lg:mb-0 lg:w-full lg:grid-cols-2 lg:text-center mt-4 gap-5${isMobile ? ' mt-32' : ''}`}
+        className={`mb-10 grid text-center lg:mb-0 lg:w-full lg:grid-cols-2 lg:text-center gap-5${isMobile ? ' mt-32' : 'mt-4'}`}
       >
         <CandidateCard
           candidate="Trump"
