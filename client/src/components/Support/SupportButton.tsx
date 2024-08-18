@@ -21,7 +21,6 @@ const SupportButton: React.FC<SupportButtonProps> = ({
   const [isClient, setIsClient] = useState(false);
   const { isConnected } = useAccount();
 
-  // Ensure that client-only logic runs after the component mounts
   useEffect(() => {
     setIsClient(true);
   }, []);
