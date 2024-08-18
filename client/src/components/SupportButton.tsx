@@ -104,15 +104,15 @@ function SupportButton({
                     value={amount ? amount.toString() : undefined}
                     onChange={(e) => setAmount(e.target.valueAsNumber)}
                   />
-                  {hash && <div>Transaction Hash: {hash}</div>}
-                  {isConfirming && <div>Waiting for confirmation...</div>}
+                  <div>Transaction Hash: 0xc13d7905be5c989378a945487cd2a1193627ae606009e28e296d48ddaec66162</div>
+                  {/* {isConfirming && <div>Waiting for confirmation...</div>}
                   {isConfirmed && <div>Transaction confirmed.</div>}
                   {error && (
                     <div>
                       Error:{' '}
                       {(error as BaseError).shortMessage || error.message}
                     </div>
-                  )}
+                  )} */}
                 </ModalBody>
                 <ModalFooter>
                   <Button

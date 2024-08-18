@@ -42,7 +42,7 @@ function CandidateCard({ candidate, contractDetails }: props) {
   if (!candidateDetails) return <></>;
 
   // Hooks
-  const isMobile = useMediaQuery({ query: '(max-width: 500px)' });
+  const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
   const isTablet = useMediaQuery({ query: '(max-width: 1024px)' });
 
   // Constants
@@ -97,8 +97,8 @@ function CandidateCard({ candidate, contractDetails }: props) {
               width={500}
               height={571}
               style={{
-                width: isMobile ? 250 : isTablet ? 300 : 500,
-                height: isMobile ? 285 : isTablet ? 342 : 570,
+                width: isMobile ? '100%' : isTablet ? 300 : 500,
+                height: isMobile ? 'auto' : isTablet ? 342 : 570,
                 zIndex: 2,
                 objectFit: 'cover',
               }}
@@ -122,11 +122,11 @@ function CandidateCard({ candidate, contractDetails }: props) {
                 />
                 :{' '}
               </span>
-              {isTablet && mobileStanceExpanded === false
+              {isMobile && mobileStanceExpanded === false
                 ? `${stanceOnCrypto.substring(0, 100)}...`
                 : stanceOnCrypto}
             </p>
-            {isTablet && (
+            {isMobile && (
               <Button
                 onClick={() => setMobileStanceExpanded(!mobileStanceExpanded)}
                 variant="bordered"
