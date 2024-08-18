@@ -65,13 +65,13 @@ const SupportButton: React.FC<SupportButtonProps> = ({
       )}
       <Button
         disabled={modalOpen}
-        color="success"
+        color="primary"
         onClick={() => setModalOpen(true)}
       >
         <FontAwesomeIcon
           icon={candidate === 'Trump' ? faRepublican : faDemocrat}
           style={{ marginLeft: 5 }}
-          color="#000000"
+          color="#ffffff"
         />
         Support
       </Button>

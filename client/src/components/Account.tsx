@@ -77,7 +77,7 @@ function Account(): JSX.Element {
             : 'Loading...'}
         </Code>
       </Tooltip>
-      <Button color="primary" className="w-fit" onClick={() => disconnect()}>
+      <Button color="secondary" className="w-fit" onClick={() => disconnect()}>
         Disconnect
       </Button>
     </div>

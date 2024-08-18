@@ -130,10 +130,16 @@ const SupportModal: React.FC<SupportModalProps> = ({
             </Button>
             <Button
               disabled={isPending || isConfirming || error ? true : false}
-              color="success"
+              color={isConfirmed ? 'success' : 'primary'}
               type="submit"
             >
-              {isPending || isConfirming ? <Spinner size="sm" /> : 'Support'}
+              {isConfirmed ? (
+                'Donated!'
+              ) : isPending || isConfirming ? (
+                <Spinner size="sm" />
+              ) : (
+                'Support'
+              )}
             </Button>
           </ModalFooter>
         </form>

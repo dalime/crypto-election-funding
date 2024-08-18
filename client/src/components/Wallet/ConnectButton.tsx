@@ -35,7 +35,7 @@ function ConnectButton({
         </>
       )}
       <Button
-        color={isConnecting ? 'primary' : 'secondary'}
+        color={isConnecting ? 'secondary' : 'primary'}
         onClick={onClick}
         className="w-full"
       >

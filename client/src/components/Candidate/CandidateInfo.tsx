@@ -35,9 +35,9 @@ const CandidateInfo: React.FC<Props> = ({ details, isMobile, isTablet }) => {
       <h3 className="font-bold text-xl mb-3 mt-3">
         {party}{' '}
         <FontAwesomeIcon
-          icon={name === 'Trump' ? faRepublican : faDemocrat}
+          icon={name === 'Donald Trump' ? faRepublican : faDemocrat}
           style={{ marginLeft: 5 }}
-          color={name === 'Trump' ? '#e9252b' : '#1fb1f4'}
+          color={name === 'Donald Trump' ? '#e9252b' : '#1fb1f4'}
         />
       </h3>
       <h3 className="font-bold text-large mb-3">Age: {age}</h3>
