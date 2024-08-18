@@ -10,6 +10,7 @@ import {
   Progress,
   Code,
   Tooltip,
+  Spinner,
 } from '@nextui-org/react';
 import { type WriteContractErrorType } from '@wagmi/core';
 import { type BaseError } from 'wagmi';
@@ -128,13 +129,11 @@ const SupportModal: React.FC<SupportModalProps> = ({
               Close
             </Button>
             <Button
-              disabled={
-                isPending || isConfirming || isConfirmed || error ? true : false
-              }
+              disabled={isPending || isConfirming || error ? true : false}
               color="success"
               type="submit"
             >
-              Support
+              {isPending || isConfirming ? <Spinner size="sm" /> : 'Support'}
             </Button>
           </ModalFooter>
         </form>
