@@ -27,7 +27,7 @@ export default function Home() {
   }));
 
   // Hooks
-  const { isConnected } = useAccount();
+  const { isConnected, isConnecting } = useAccount();
   const result = useReadContract({
     abi,
     address: contractAddress as `0x${string}`,
@@ -87,7 +87,10 @@ export default function Home() {
           {isConnected ? (
             <Account />
           ) : (
-            <ConnectButton onClick={() => setShowWallets(true)} />
+            <ConnectButton
+              isConnecting={isConnecting}
+              onClick={() => setShowWallets(true)}
+            />
           )}
         </div>
       </div>
