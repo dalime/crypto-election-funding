@@ -78,6 +78,19 @@ export const abi = [
     outputs: [],
   },
   {
+    type: 'function',
+    name: 'FEE_PERCENTAGE',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
     type: 'event',
     name: 'Support',
     inputs: [

@@ -11,11 +11,13 @@ import SupportModal from './SupportModal';
 interface SupportButtonProps {
   candidate: 'Trump' | 'Kamala';
   updateCandidateDetails: (amount: number) => void;
+  feeAmount: number | null;
 }
 
 const SupportButton: React.FC<SupportButtonProps> = ({
   candidate,
   updateCandidateDetails,
+  feeAmount,
 }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [isClient, setIsClient] = useState(false);
@@ -51,6 +53,7 @@ const SupportButton: React.FC<SupportButtonProps> = ({
         modalOpen && (
           <SupportModal
             candidateFullName={candidateFullName}
+            feeAmount={feeAmount}
             hash={hash}
             amount={amount}
             setAmount={setAmount}

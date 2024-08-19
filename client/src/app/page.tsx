@@ -28,10 +28,17 @@ export default function Home() {
 
   // Hooks
   const { isConnected, isConnecting } = useAccount();
-  const result = useReadContract({
+  const readDetailsResult = useReadContract({
     abi,
     address: contractAddress as `0x${string}`,
     functionName: 'readDetails',
+    config,
+    chainId: sepolia.id,
+  });
+  const feePercentageResult = useReadContract({
+    abi,
+    address: contractAddress as `0x${string}`,
+    functionName: 'FEE_PERCENTAGE',
     config,
     chainId: sepolia.id,
   });
@@ -48,9 +55,11 @@ export default function Home() {
     setIsTablet(window.innerWidth <= 1024 && window.innerWidth > 500);
   }, []);
 
-  const resultDataArr: any = result.data;
-  const resultData: ContractDetails | null =
-    result && result.data && (result.data as BigInt[]).length === 4
+  const resultDataArr: any = readDetailsResult.data;
+  const readDetailsResultData: ContractDetails | null =
+    readDetailsResult &&
+    readDetailsResult.data &&
+    (readDetailsResult.data as BigInt[]).length === 4
       ? {
           amountTrump: Number(resultDataArr[0]),
           numTrump: Number(resultDataArr[1]),
@@ -102,11 +111,29 @@ export default function Home() {
       >
         <CandidateCard
           candidate="Trump"
-          contractDetails={result && result.data ? resultData : null}
+          contractDetails={
+            readDetailsResult && readDetailsResult.data
+              ? readDetailsResultData
+              : null
+          }
+          feeAmount={
+            feePercentageResult && feePercentageResult.data
+              ? Number(feePercentageResult.data)
+              : null
+          }
         />
         <CandidateCard
           candidate="Kamala"
-          contractDetails={result && result.data ? resultData : null}
+          contractDetails={
+            readDetailsResult && readDetailsResult.data
+              ? readDetailsResultData
+              : null
+          }
+          feeAmount={
+            feePercentageResult && feePercentageResult.data
+              ? Number(feePercentageResult.data)
+              : null
+          }
         />
       </div>
       <footer className={isClient && isMobile ? 'mt-5' : 'mt-10'}>

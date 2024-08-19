@@ -10,6 +10,7 @@ interface Props {
   num: number;
   updateCandidateDetails: (newDonation: number) => void;
   contractDetails: ContractDetails | null;
+  feeAmount: number | null;
 }
 
 const CandidateFooter: React.FC<Props> = ({
@@ -18,11 +19,13 @@ const CandidateFooter: React.FC<Props> = ({
   num,
   updateCandidateDetails,
   contractDetails,
+  feeAmount,
 }) => (
   <div className="flex flex-row gap-4 justify-between items-center w-full m-2">
     <SupportButton
       candidate={candidate}
       updateCandidateDetails={updateCandidateDetails}
+      feeAmount={feeAmount}
     />
     {contractDetails && (
       <>

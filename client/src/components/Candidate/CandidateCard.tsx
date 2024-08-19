@@ -11,9 +11,10 @@ import CandidateFooter from './CandidateFooter';
 interface Props {
   candidate: 'Trump' | 'Kamala';
   contractDetails: ContractDetails | null;
+  feeAmount: number | null;
 }
 
-function CandidateCard({ candidate, contractDetails }: Props) {
+function CandidateCard({ candidate, contractDetails, feeAmount }: Props) {
   const candidateDetails = useCandidateDetails(candidate);
   if (!candidateDetails) return null;
 
@@ -81,6 +82,7 @@ function CandidateCard({ candidate, contractDetails }: Props) {
           num={num}
           updateCandidateDetails={updateCandidateDetails}
           contractDetails={contractDetails}
+          feeAmount={feeAmount ? feeAmount : 0}
         />
       </CardFooter>
     </Card>

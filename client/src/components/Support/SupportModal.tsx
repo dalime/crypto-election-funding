@@ -23,6 +23,7 @@ import EthereumPrice from '../Ethereum/EthereumPrice';
 
 interface SupportModalProps {
   candidateFullName: string;
+  feeAmount: number | null;
   hash: `0x${string}` | undefined;
   amount: string | undefined;
   setAmount: (value: string | undefined) => void;
@@ -38,6 +39,7 @@ interface SupportModalProps {
 
 const SupportModal: React.FC<SupportModalProps> = ({
   candidateFullName,
+  feeAmount,
   amount,
   hash,
   setAmount,
@@ -100,7 +102,7 @@ const SupportModal: React.FC<SupportModalProps> = ({
       <ModalContent>
         <form onSubmit={handleSupport}>
           <ModalHeader className="flex flex-col gap-1">
-            Send ETH to {candidateFullName}'s Campaign
+            <h2>Send ETH to {candidateFullName}'s Campaign</h2>
           </ModalHeader>
           <ModalBody>
             {ethPrices && (
@@ -178,31 +180,40 @@ const SupportModal: React.FC<SupportModalProps> = ({
               </div>
             )}
           </ModalBody>
-          <ModalFooter>
-            <Button
-              disabled={isPending}
-              color="default"
-              variant="light"
-              onPress={onClose}
-            >
-              Close
-            </Button>
-            <Button
-              disabled={isPending || isConfirming || !!error}
-              color={isPending || isConfirming ? 'default' : 'primary'}
-              type={!supportStateCleared && isConfirmed ? 'button' : 'submit'}
-              onClick={
-                !supportStateCleared && isConfirmed ? clearState : undefined
-              }
-            >
-              {!supportStateCleared && isConfirmed ? (
-                'Support Again'
-              ) : isPending || isConfirming ? (
-                <Spinner size="sm" />
-              ) : (
-                'Support'
-              )}
-            </Button>
+          <ModalFooter className="justify-between">
+            {feeAmount ? (
+              <p className="text-xs text-left flex items-center justify-center text-foreground-500">
+                This Dapp charges a {feeAmount}% service fee
+              </p>
+            ) : (
+              <></>
+            )}
+            <div className="flex flex-row justify-end items-center">
+              <Button
+                disabled={isPending}
+                color="default"
+                variant="light"
+                onPress={onClose}
+              >
+                Close
+              </Button>
+              <Button
+                disabled={isPending || isConfirming || !!error}
+                color={isPending || isConfirming ? 'default' : 'primary'}
+                type={!supportStateCleared && isConfirmed ? 'button' : 'submit'}
+                onClick={
+                  !supportStateCleared && isConfirmed ? clearState : undefined
+                }
+              >
+                {!supportStateCleared && isConfirmed ? (
+                  'Support Again'
+                ) : isPending || isConfirming ? (
+                  <Spinner size="sm" />
+                ) : (
+                  'Support'
+                )}
+              </Button>
+            </div>
           </ModalFooter>
         </form>
       </ModalContent>
