@@ -7,7 +7,7 @@ export const useSupportCandidate = (
   updateCandidateDetails: (amount: number) => void
 ) => {
   // Hooks
-  const { data: hash, error, writeContract, isPending, isSuccess } =
+  const { data: hash, error, writeContract, isPending } =
     useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
@@ -36,19 +36,23 @@ export const useSupportCandidate = (
     if (!amount || parseFloat(amount) <= 0) return alert('Please enter a valid amount.');
 
     if (contractAddress) {
-      const weiValue = BigInt(Math.floor(parseFloat(amount) * 1e18));
+      try {
+        const weiValue = BigInt(Math.floor(parseFloat(amount) * 1e18));
+        const candidateName: string = candidate  === 'Trump' ? 'Trump' : 'Kamala';
 
-      writeContract({
-        address: contractAddress as `0x${string}`,
-        abi,
-        functionName: 'support',
-        args: [candidate],
-        value: weiValue,
-      });
+        writeContract({
+          address: contractAddress as `0x${string}`,
+          abi: abi,
+          functionName: 'support',
+          args: [candidateName],
+          value: weiValue,
+        });
+      } catch (error) {
+        console.error('Write to contract error: ', error);
+      }
     } else {
       alert('Contract address not found.');
     }
-
     setCleared(false);
   };
 
