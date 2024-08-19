@@ -7,7 +7,7 @@ import {
 } from 'wagmi';
 import { Button, Code, Tooltip } from '@nextui-org/react';
 
-import { shortenAddress, copyAddress } from '@/utils';
+import { shortenAddress, copyAddress } from '../utils';
 
 function Account(): JSX.Element {
   // Hooks
@@ -56,6 +56,7 @@ function Account(): JSX.Element {
         }}
       /> */}
       <Tooltip
+        data-testid="account-address-tooltip"
         content={
           isClient && isConnected
             ? addressCopied

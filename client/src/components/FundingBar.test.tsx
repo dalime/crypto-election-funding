@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import FundingBar from './FundingBar';
-import { roundTo6Decimals } from '../utils';
 import * as useMediaQueryModule from 'react-responsive';
 
 // Mock the roundTo6Decimals utility function
