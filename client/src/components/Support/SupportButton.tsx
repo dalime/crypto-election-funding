@@ -71,6 +71,7 @@ const SupportButton: React.FC<SupportButtonProps> = ({
         <ConnectWallet modalOpen={modalOpen} setModalOpen={setModalOpen} />
       )}
       <Button
+        data-testid="support-button"
         disabled={modalOpen}
         color="primary"
         onClick={() => setModalOpen(true)}
