@@ -2,7 +2,7 @@ import React from 'react';
 import { Slider } from '@nextui-org/react';
 import { useMediaQuery } from 'react-responsive';
 
-import { roundTo6Decimals } from '../utils';
+import { roundTo6Decimals } from '@/utils';
 
 function FundingBar({ amount }: { amount: number | undefined }) {
   // Hooks

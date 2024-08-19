@@ -20,6 +20,7 @@ const customJestConfig = {
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
     '^.+\\.(css|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
     '^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$/i': `<rootDir>/__mocks__/fileMock.js`,
+    '^@/(.*)$': '<rootDir>/src/$1',
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
     '@next/font/(.*)': `<rootDir>/__mocks__/nextFontMock.js`,
     'next/font/(.*)': `<rootDir>/__mocks__/nextFontMock.js`,

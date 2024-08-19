@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Account from '../Account';
 import { useAccount, useDisconnect, useEnsName } from 'wagmi';
-import { shortenAddress } from '../../utils';
+import { shortenAddress } from '@/utils';
 
 jest.mock('wagmi', () => ({
   useAccount: jest.fn(),
@@ -11,7 +11,7 @@ jest.mock('wagmi', () => ({
   useEnsName: jest.fn(),
 }));
 
-jest.mock('../../utils', () => ({
+jest.mock('@/utils', () => ({
   shortenAddress: jest.fn(),
   copyAddress: jest.fn(),
 }));
