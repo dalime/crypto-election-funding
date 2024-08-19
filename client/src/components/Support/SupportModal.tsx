@@ -168,7 +168,7 @@ const SupportModal: React.FC<SupportModalProps> = ({
             )}
             {isConfirmed && !supportStateCleared && (
               <div className="w-full max-w-full">
-                <p>Transaction confirmed! Supported.</p>
+                <p>Transaction confirmed!</p>
                 {renderProgress(true)}
               </div>
             )}
