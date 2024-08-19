@@ -17,7 +17,7 @@ import { type BaseError, useChainId } from 'wagmi';
 import { sepolia } from 'viem/chains';
 
 import { EthPriceContext } from '@/contexts';
-import { shortenAddress, copyAddress } from '@/utils';
+import { shortenAddress, copyAddress, formatToUSD } from '@/utils';
 import { CopySVG } from '@/assets/svg';
 import EthereumPrice from '../Ethereum/EthereumPrice';
 
@@ -103,7 +103,12 @@ const SupportModal: React.FC<SupportModalProps> = ({
             Send ETH to {candidateFullName}'s Campaign
           </ModalHeader>
           <ModalBody>
-            {ethPrices && <EthereumPrice price={ethPrices[0].current_price} />}
+            {ethPrices && (
+              <EthereumPrice
+                ethPrice={ethPrices[0].current_price}
+                ethSupport={amount}
+              />
+            )}
             <Input
               label="Amount in ETH"
               type="number"
@@ -122,6 +127,11 @@ const SupportModal: React.FC<SupportModalProps> = ({
               disabled={
                 !supportStateCleared &&
                 (isPending || isConfirming || isConfirmed)
+              }
+              description={
+                ethPrices && ethPrices[0].current_price && amount
+                  ? `Approx. ${formatToUSD(parseFloat(amount) * ethPrices[0].current_price)}`
+                  : ''
               }
             />
             {hash && !supportStateCleared && (

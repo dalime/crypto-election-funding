@@ -5,18 +5,24 @@ import { formatToUSD } from '@/utils';
 import { EthereumSVG } from '@/assets/svg';
 
 interface Props {
-  price: number | null;
+  ethPrice: number | null;
+  ethSupport: string | undefined;
 }
 
-function EthereumPrice({ price }: Props) {
-  if (!price) return <></>;
+function EthereumPrice({ ethPrice, ethSupport }: Props) {
+  if (!ethPrice) return <></>;
   return (
-    <div className="flex flex-row items-start items-center">
+    <div className="flex flex-row justify-start items-center">
       <EthereumSVG
-        style={{ width: 20, height: 20, background: 'transparent' }}
+        style={{
+          width: 20,
+          height: 20,
+          background: 'transparent',
+          marginRight: 10,
+        }}
       />
       <p>
-        Current ETH Price: <Code>{formatToUSD(price)}</Code>
+        Current ETH Price: <Code>{formatToUSD(ethPrice)}</Code>
       </p>
     </div>
   );
