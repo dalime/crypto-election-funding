@@ -21,7 +21,7 @@ const config = {
   },
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
   testEnvironment: 'jsdom',
-  preset: 'ts-jest',
+  preset: 'ts-jest/presets/js-with-ts-esm',
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },

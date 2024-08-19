@@ -1,4 +1,4 @@
-import { calculateAge } from "@/utils";
+import { calculateAge } from "../utils";
 
 // Donald Trump Details
 export const trumpDetails = {
