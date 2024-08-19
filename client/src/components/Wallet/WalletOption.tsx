@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { Connector } from 'wagmi';
 import { Button } from '@nextui-org/react';

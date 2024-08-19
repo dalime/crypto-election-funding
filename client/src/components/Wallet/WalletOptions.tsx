@@ -1,3 +1,4 @@
+import React from 'react';
 import { Connector, useConnect } from 'wagmi';
 import {
   Modal,

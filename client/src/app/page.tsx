@@ -1,7 +1,7 @@
 // app/page.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAccount, useReadContract } from 'wagmi';
 import { mainnet, sepolia } from 'viem/chains';
 

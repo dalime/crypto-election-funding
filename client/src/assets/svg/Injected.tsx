@@ -1,3 +1,4 @@
+import React from 'react';
 import './injected.css';
 
 export function InjectedSVG() {
