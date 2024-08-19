@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Modal,
   ModalContent,
@@ -16,8 +16,10 @@ import { type WriteContractErrorType } from '@wagmi/core';
 import { type BaseError, useChainId } from 'wagmi';
 import { sepolia } from 'viem/chains';
 
+import { EthPriceContext } from '@/contexts';
 import { shortenAddress, copyAddress } from '@/utils';
 import { CopySVG } from '@/assets/svg';
+import EthereumPrice from '../Ethereum/EthereumPrice';
 
 interface SupportModalProps {
   candidateFullName: string;
@@ -48,6 +50,9 @@ const SupportModal: React.FC<SupportModalProps> = ({
   clearSupportState,
   onClose,
 }) => {
+  // Context
+  const ethPrices = useContext(EthPriceContext);
+
   // Chain ID
   const chainId = useChainId();
 
@@ -98,6 +103,7 @@ const SupportModal: React.FC<SupportModalProps> = ({
             Send ETH to {candidateFullName}'s Campaign
           </ModalHeader>
           <ModalBody>
+            {ethPrices && <EthereumPrice price={ethPrices[0].current_price} />}
             <Input
               label="Amount in ETH"
               type="number"
