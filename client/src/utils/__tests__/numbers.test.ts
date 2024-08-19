@@ -1,4 +1,4 @@
-import { roundTo6Decimals, calculateAge } from './numbers'
+import { roundTo6Decimals, calculateAge } from '../numbers'
 
 describe('roundTo6Decimals utility function', () => {
   test('Should round number to 6 decimal places', () => {

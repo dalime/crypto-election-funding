@@ -1,4 +1,4 @@
-import { formatToUSD } from './currencies';
+import { formatToUSD } from '../currencies';
 
 describe('formatToUSD utility function', () => {
   it('Should format the number with two decimal places and add USD suffix', () => {

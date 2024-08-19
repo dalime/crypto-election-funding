@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import FundingBar from './FundingBar';
+import FundingBar from '../FundingBar';
 import * as useMediaQueryModule from 'react-responsive';
 
 // Mock the roundTo6Decimals utility function
-jest.mock('../utils', () => ({
+jest.mock('../../utils', () => ({
   roundTo6Decimals: jest.fn((amount) => amount.toFixed(6)),
 }));
 

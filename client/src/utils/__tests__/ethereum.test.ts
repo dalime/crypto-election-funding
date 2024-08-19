@@ -1,4 +1,4 @@
-import { shortenAddress, copyAddress } from './ethereum';
+import { shortenAddress, copyAddress } from '../ethereum';
 
 describe('Ethereum Utils', () => {
   describe('shortenAddress utility function', () => {
