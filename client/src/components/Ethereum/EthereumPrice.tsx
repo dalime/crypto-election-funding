@@ -2,7 +2,7 @@ import React from 'react';
 import { Code } from '@nextui-org/react';
 
 import { formatToUSD } from '@/utils';
-import { EthereumSVG } from '@/assets/svg';
+import { EthereumSVG, CoinGeckoSVG } from '@/assets/svg';
 
 interface Props {
   ethPrice: number | null;
@@ -15,8 +15,8 @@ function EthereumPrice({ ethPrice, ethSupport }: Props) {
     <div className="flex flex-row justify-start items-center">
       <EthereumSVG
         style={{
-          width: 20,
-          height: 20,
+          width: 30,
+          height: 30,
           background: 'transparent',
           marginRight: 10,
         }}
@@ -24,6 +24,7 @@ function EthereumPrice({ ethPrice, ethSupport }: Props) {
       <p>
         Current ETH Price: <Code>{formatToUSD(ethPrice)}</Code>
       </p>
+      <CoinGeckoSVG style={{ width: 28, height: 28, marginLeft: 10 }} />
     </div>
   );
 }

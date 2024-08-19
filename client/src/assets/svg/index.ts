@@ -1,4 +1,5 @@
 export * from './Coinbase';
+export * from './CoinGecko';
 export * from './CopyIcon';
 export * from './Ethereum';
 export * from './Injected';
