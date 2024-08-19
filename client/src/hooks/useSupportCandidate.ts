@@ -6,6 +6,7 @@ export const useSupportCandidate = (
   candidate: 'Trump' | 'Kamala',
   updateCandidateDetails: (amount: number) => void
 ) => {
+  // Hooks
   const { data: hash, error, writeContract, isPending, isSuccess } =
     useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
@@ -13,22 +14,29 @@ export const useSupportCandidate = (
       hash,
     });
 
-  const [amount, setAmount] = useState<number | undefined>(undefined);
+  // State
+  const [amount, setAmount] = useState<string | undefined>(undefined);
+  const [cleared, setCleared] = useState<boolean>(false);
 
+  // Effects
   useEffect(() => {
     if (isConfirmed) {
       if (amount && candidate) updateCandidateDetails(parseFloat(amount.toString()));
     }
   }, [isConfirmed]);
 
+  /**
+   * Handles writing the support transaction to the contract
+   * @param e React.FormEvent<HTMLFormElement>
+   */
   const handleSupport = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '';
 
-    if (!amount || amount <= 0) return alert('Please enter a valid amount.');
+    if (!amount || parseFloat(amount) <= 0) return alert('Please enter a valid amount.');
 
     if (contractAddress) {
-      const weiValue = BigInt(Math.floor(amount * 1e18));
+      const weiValue = BigInt(Math.floor(parseFloat(amount) * 1e18));
 
       writeContract({
         address: contractAddress as `0x${string}`,
@@ -40,6 +48,16 @@ export const useSupportCandidate = (
     } else {
       alert('Contract address not found.');
     }
+
+    setCleared(false);
+  };
+
+  /**
+   * Clears the amount state
+   */
+  const clearState = () => {
+    setAmount(undefined);
+    setCleared(true);
   };
 
   return {
@@ -51,5 +69,7 @@ export const useSupportCandidate = (
     isConfirmed,
     error,
     handleSupport,
+    cleared,
+    clearState,
   };
 };

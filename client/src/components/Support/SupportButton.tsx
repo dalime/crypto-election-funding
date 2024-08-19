@@ -37,6 +37,8 @@ const SupportButton: React.FC<SupportButtonProps> = ({
     isConfirmed,
     error,
     handleSupport,
+    cleared,
+    clearState,
   } = useSupportCandidate(candidate, updateCandidateDetails);
 
   if (!isClient) {
@@ -57,6 +59,8 @@ const SupportButton: React.FC<SupportButtonProps> = ({
             isConfirmed={isConfirmed}
             error={error}
             handleSupport={handleSupport}
+            supportStateCleared={cleared}
+            clearSupportState={clearState}
             onClose={() => setModalOpen(false)}
           />
         )

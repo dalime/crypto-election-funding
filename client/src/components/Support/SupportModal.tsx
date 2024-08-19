@@ -13,7 +13,8 @@ import {
   Spinner,
 } from '@nextui-org/react';
 import { type WriteContractErrorType } from '@wagmi/core';
-import { type BaseError } from 'wagmi';
+import { type BaseError, useChainId } from 'wagmi';
+import { sepolia } from 'viem/chains';
 
 import { shortenAddress, copyAddress } from '@/utils';
 import { CopySVG } from '@/assets/svg';
@@ -21,13 +22,15 @@ import { CopySVG } from '@/assets/svg';
 interface SupportModalProps {
   candidateFullName: string;
   hash: `0x${string}` | undefined;
-  amount: number | undefined;
-  setAmount: (value: number | undefined) => void;
+  amount: string | undefined;
+  setAmount: (value: string | undefined) => void;
   isPending: boolean;
   isConfirming: boolean;
   isConfirmed: boolean;
   error: WriteContractErrorType | null;
   handleSupport: (e: React.FormEvent<HTMLFormElement>) => void;
+  supportStateCleared: boolean;
+  clearSupportState: () => void;
   onClose: () => void;
 }
 
@@ -41,15 +44,49 @@ const SupportModal: React.FC<SupportModalProps> = ({
   isConfirmed,
   error,
   handleSupport,
+  supportStateCleared,
+  clearSupportState,
   onClose,
 }) => {
+  // Chain ID
+  const chainId = useChainId();
+
+  /**
+   * Opens the etherscan link for the transaction
+   * @param hash `0x${string}`
+   */
+  const openEtherscan = (hash: `0x${string}`): void => {
+    const etherscanUrl =
+      chainId === sepolia.id
+        ? `https://sepolia.etherscan.io/tx/${hash}`
+        : `https://etherscan.io/tx/${hash}`;
+    window.open(etherscanUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  /**
+   * Handles clearing the support state
+   * @param e React.MouseEvent<HTMLButtonElement, MouseEvent>
+   */
+  const clearState = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    e.preventDefault();
+    clearSupportState();
+  };
+
+  /**
+   * Renders a progress bar for the transaction
+   * @param finished boolean | undefined
+   * @returns JSX.Element
+   */
   const renderProgress = (finished?: boolean): JSX.Element => (
     <Progress
       size="sm"
-      isIndeterminate={finished ? false : true}
+      isIndeterminate={!finished}
       aria-label={finished ? 'Sent' : 'Sending...'}
       className="max-w-md"
       value={finished ? 100 : undefined}
+      color={error ? 'danger' : finished ? 'success' : 'primary'}
     />
   );
 
@@ -66,22 +103,28 @@ const SupportModal: React.FC<SupportModalProps> = ({
               type="number"
               name="ethAmount"
               placeholder="Enter amount in ETH"
-              value={amount ? amount.toString() : undefined}
-              onChange={(e) => setAmount(e.target.valueAsNumber)}
+              value={amount !== undefined ? amount.toString() : ''}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value === '') {
+                  setAmount(undefined);
+                } else {
+                  // Only set the parsed float value if it's a valid number
+                  setAmount(value);
+                }
+              }}
+              disabled={
+                !supportStateCleared &&
+                (isPending || isConfirming || isConfirmed)
+              }
             />
-            {hash && (
+            {hash && !supportStateCleared && (
               <div className="w-full max-w-full">
                 <p>Transaction Hash:</p>
                 <Tooltip content="View on Etherscan">
                   <Code
                     style={{ cursor: 'pointer' }}
-                    onClick={() =>
-                      window.open(
-                        `https://sepolia.etherscan.io/tx/${hash}`,
-                        '_blank',
-                        'noopener,noreferrer'
-                      )
-                    }
+                    onClick={() => openEtherscan(hash)}
                   >
                     {shortenAddress(hash, 11)}
                   </Code>
@@ -99,19 +142,19 @@ const SupportModal: React.FC<SupportModalProps> = ({
                 </Tooltip>
               </div>
             )}
-            {isConfirming && (
+            {isConfirming && !supportStateCleared && (
               <div className="w-full max-w-full">
                 <p>Waiting for confirmation...</p>
                 {renderProgress()}
               </div>
             )}
-            {isConfirmed && (
+            {isConfirmed && !supportStateCleared && (
               <div className="w-full max-w-full">
-                <p>Transaction confirmed.</p>
+                <p>Transaction confirmed! Supported.</p>
                 {renderProgress(true)}
               </div>
             )}
-            {error && (
+            {error && !supportStateCleared && (
               <div className="w-full max-w-full">
                 <p className="text-red-500">
                   Error: {(error as BaseError).shortMessage || error.message}
@@ -129,12 +172,15 @@ const SupportModal: React.FC<SupportModalProps> = ({
               Close
             </Button>
             <Button
-              disabled={isPending || isConfirming || error ? true : false}
-              color={isConfirmed ? 'success' : 'primary'}
-              type="submit"
+              disabled={isPending || isConfirming || !!error}
+              color={isPending || isConfirming ? 'default' : 'primary'}
+              type={!supportStateCleared && isConfirmed ? 'button' : 'submit'}
+              onClick={
+                !supportStateCleared && isConfirmed ? clearState : undefined
+              }
             >
-              {isConfirmed ? (
-                'Donated!'
+              {!supportStateCleared && isConfirmed ? (
+                'Support Again'
               ) : isPending || isConfirming ? (
                 <Spinner size="sm" />
               ) : (
