@@ -33,10 +33,9 @@ const customJestConfig = {
   testEnvironment: 'jest-environment-jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
+    '^.+\\.(ts|tsx|js|jsx)$': 'ts-jest',
   },
   transformIgnorePatterns: [
-    '/node_modules/',
     '/node_modules/(?!(wagmi|@nextui-org|@fortawesome|fetch-mock)/)/',
     '^.+\\.module\\.(css|sass|scss)$',
   ],

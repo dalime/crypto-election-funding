@@ -22,16 +22,16 @@ const StanceOnCrypto: React.FC<Props> = ({
 }) => (
   <div>
     <p className="mb-2">
-      <span className="font-bold">
-        Stance on Crypto
+      <span data-testid="stance-on-crypto-text" className="font-bold">
+        <b>Stance on Crypto</b>
         <FontAwesomeIcon
           icon={faBitcoinSign}
           style={{ marginLeft: 5 }}
           color="#F2A900"
         />
         :{' '}
-      </span>
       {isMobile && !expanded ? `${stance.substring(0, 100)}...` : stance}
+      </span>
     </p>
     {isMobile && (
       <Button
