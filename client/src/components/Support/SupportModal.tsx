@@ -185,7 +185,7 @@ const SupportModal: React.FC<SupportModalProps> = ({
           <ModalFooter className="justify-between">
             {feeAmount ? (
               <p className="text-xs text-left flex items-center justify-center text-foreground-500">
-                This Dapp charges a {feeAmount}% service fee
+                This dApp charges a {feeAmount}% service fee
               </p>
             ) : (
               <></>
