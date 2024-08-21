@@ -25,20 +25,20 @@ const customJestConfig = {
     '@next/font/(.*)': `<rootDir>/__mocks__/nextFontMock.js`,
     'next/font/(.*)': `<rootDir>/__mocks__/nextFontMock.js`,
     'server-only': `<rootDir>/__mocks__/empty.js`,
+    '^fetch-mock$': 'fetch-mock',
   },
+  preset: 'ts-jest',
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
   testEnvironment: 'jest-environment-jsdom',
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
-    '^.+\\.(js|jsx)$': 'babel-jest',
+    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
   },
   transformIgnorePatterns: [
     '/node_modules/',
+    '/node_modules/(?!(wagmi|@nextui-org|@fortawesome|fetch-mock)/)/',
     '^.+\\.module\\.(css|sass|scss)$',
   ],
 };
 
-const config = createJestConfig(customJestConfig);
-
-export default config;
+export default createJestConfig(customJestConfig);
