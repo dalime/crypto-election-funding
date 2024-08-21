@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
   parser: '@typescript-eslint/parser', // Specifies the ESLint parser
   extends: [
     'airbnb-base', // Uses the Airbnb base style guide
@@ -26,3 +26,5 @@ module.exports = {
     },
   },
 };
+
+export default config;
