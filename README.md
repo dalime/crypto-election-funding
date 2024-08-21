@@ -3,6 +3,8 @@
 ## Overview
 The web app aims to facilitate crowdfunding for two presidential candidates in the 2024 election: Donald Trump and Kamala Harris. Users can donate ETH to support either candidate, with the funds and donation numbers tracked transparently on the blockchain. The app includes user management features to connect wallets, view previous donations, and display detailed information about each candidate.
 
+The project is currently deployed on Vercel for the Sepolia Testnet. The deployed URL is [https://crypto-election-funding.vercel.app/](https://crypto-election-funding.vercel.app/). The mainnet deployment is TBD.
+
 ## Key Features
 
 ### 1. Candidate Information Display
