@@ -23,6 +23,7 @@ const CandidateInfo: React.FC<Props> = ({ details, isMobile, isTablet }) => {
     <div className="flex flex-col justify-start items-start p-3">
       <Image
         src={image}
+        alt={name}
         width={500}
         height={571}
         style={{
