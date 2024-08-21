@@ -1,5 +1,15 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Introduction
+
+This is the frontend of the Crypto Presidential Election Funding Web App. It is built using Next.js and React, and utilizes the Wagmi library for wallet integration.
+
+## Installation
+
+To install the dependencies, follow these steps:
+
+1. Run `yarn`, `npm`, `pnpm`, or any other package manager to install the project's dependencies. However, it's recommended to use `yarn` for consistency.
+
 ## Getting Started
 
 First, run the development server:
@@ -19,6 +29,20 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Testing
+
+To test the components and utility functions, run:
+
+```bash
+npm test
+# or
+yarn test
+# or
+pnpm test
+# or
+bun test
+```
 
 ## Learn More
 

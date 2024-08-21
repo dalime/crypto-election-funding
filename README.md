@@ -1,5 +1,4 @@
-
-# Technical Specification: Presidential Candidate Crowdfunding Web App
+# Crypto Presidential Election Funding Web App
 
 ## Overview
 The web app aims to facilitate crowdfunding for two presidential candidates in the 2024 election: Donald Trump and Kamala Harris. Users can donate ETH to support either candidate, with the funds and donation numbers tracked transparently on the blockchain. The app includes user management features to connect wallets, view previous donations, and display detailed information about each candidate.
@@ -25,7 +24,7 @@ The web app aims to facilitate crowdfunding for two presidential candidates in t
 - **Wallet Connection**:
   - Users can connect their wallet (e.g., MetaMask) to the web app.
   - The app will display a "Connect Wallet" button, changing to "Connected" once the wallet is linked.
-- **My Contributions Tab**:
+- **My Contributions Tab** (TO DO):
   - When a user connects their wallet, a "My Contributions" tab becomes available.
   - Clicking the "My Contributions" tab renders a component that displays a table of the user's past donations.
 
@@ -54,21 +53,15 @@ The web app aims to facilitate crowdfunding for two presidential candidates in t
   - `updateWalletAddress(string memory candidateName, address newWallet) public`: 
     - Updates the wallet address for the specified candidate. This function should only be callable by an authorized entity.
 
-### 5. Real-Time Data Updates
-- **Integration with The Graph**:
-  - Use The Graph to index and query blockchain data.
-  - Fetch and display up-to-date information on the funds raised and the number of donations for each candidate.
-
 ## Tech Stack
 
 ### Frontend
 - **Framework**: Next.js, React
 - **Language**: TypeScript
-- **State Management**: React Context or Zustand
-- **Styling**: CSS Modules or styled-components
+- **State Management**: React Context
+- **Styling**: CSS Modules and Tailwind CSS
 - **Library for Blockchain Interaction**: Web3.js
-- **GraphQL API for Blockchain Data**: The Graph
-- **Wallet Integration**: Wagmi (with MetaMask)
+- **Wallet Integration**: MetaMask
 
 ### Smart Contracts
 - **Development Environment**: Hardhat
@@ -93,7 +86,34 @@ The web app aims to facilitate crowdfunding for two presidential candidates in t
 
 ### Data Handling
 - **Currency Conversion**: Convert USD to ETH using an external API (e.g., CoinGecko) at the time of the transaction.
-- **Data Synchronization**: Utilize The Graph to keep the frontend updated with real-time blockchain data.
+- **Data Synchronization**: Use web3.js to keep the frontend updated with real-time blockchain data.
+
+## Installation
+
+To install the dependencies, follow these steps:
+
+1. Run `yarn`, `npm`, `pnpm`, or any other package manager to install the project's dependencies. However, it's recommended to use `yarn` for consistency.
+2. Navigate to the `client/` directory and run `yarn` (or another package manager) to install the dependencies for the frontend.
+
+## Running the Project Locally
+
+To run the client/frontend locally:
+
+```bash
+yarn start:client
+```
+
+Or use npm or pnpm with the equivalent command to start the frontend locally.
+
+## Testing
+
+To test the smart contract with Hardhat, run:
+
+```bash
+yarn test
+```
+
+Or use npm or pnpm with the equivalent command to run the tests.
 
 ## User Flow
 
@@ -113,24 +133,22 @@ The web app aims to facilitate crowdfunding for two presidential candidates in t
    - The smart contract updates the respective candidate's total amount and donation count.
 
 5. **Updating the UI**:
-   - The frontend fetches the latest data using The Graph, ensuring real-time updates of the donation statistics.
+   - The frontend fetches the latest data using web3.js, ensuring real-time updates of the donation statistics.
 
 ## Deployment
 
 ### Smart Contracts
-- **Testnet Deployment**: Deploy contracts on a testnet (e.g., Rinkeby) for testing.
-- **Mainnet Deployment**: Deploy contracts on the Ethereum mainnet for production.
+- **Testnet Deployment**: Deploy contracts on a testnet (e.g., Sepolia) for testing.
+- **Mainnet Deployment**: TO DO
 
 ### Frontend
 - **Hosting**: Use platforms like Vercel or Netlify for hosting the Next.js application.
 - **Domain**: Secure a domain name for the web app.
 
 ## Monitoring & Maintenance
-- **Analytics**: Integrate tools like Google Analytics to monitor user interactions and app performance.
+- **Analytics**: TO DO
 - **Error Handling**: Implement comprehensive error handling and user feedback mechanisms for transaction errors or network issues.
 
 ## Additional Considerations
 - **Compliance**: Ensure compliance with relevant regulations, especially regarding political donations and cryptocurrency transactions.
 - **Accessibility**: Design the app to be accessible to users with disabilities, following best practices for web accessibility.
-
-This tech spec outlines the foundational elements and additional features needed to develop the crowdfunding web app for the presidential candidates, including user management and transparent tracking of donations. Further iterations and refinements may be made as development progresses.
