@@ -1,6 +1,7 @@
 'use client';
 
-import React, { createContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
 import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { WagmiProvider } from 'wagmi';
@@ -32,16 +33,21 @@ export function App({
   }, []);
 
   return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-        <NextUIProvider>
-          <NextThemesProvider attribute="class" defaultTheme="dark">
-            <EthPriceContext.Provider value={ethPrices}>
-              {children}
-            </EthPriceContext.Provider>
-          </NextThemesProvider>
-        </NextUIProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+      </Head>
+      <WagmiProvider config={config}>
+        <QueryClientProvider client={queryClient}>
+          <NextUIProvider>
+            <NextThemesProvider attribute="class" defaultTheme="dark">
+              <EthPriceContext.Provider value={ethPrices}>
+                {children}
+              </EthPriceContext.Provider>
+            </NextThemesProvider>
+          </NextUIProvider>
+        </QueryClientProvider>
+      </WagmiProvider>
+    </>
   );
 }

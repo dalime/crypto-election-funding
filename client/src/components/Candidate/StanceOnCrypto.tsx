@@ -22,7 +22,7 @@ const StanceOnCrypto: React.FC<Props> = ({
 }) => (
   <div>
     <p className="mb-2">
-      <span data-testid="stance-on-crypto-text" className="font-bold">
+      <span data-testid="stance-on-crypto-text">
         <b>Stance on Crypto</b>
         <FontAwesomeIcon
           icon={faBitcoinSign}

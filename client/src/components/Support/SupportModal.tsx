@@ -137,6 +137,7 @@ const SupportModal: React.FC<SupportModalProps> = ({
                   : ''}
                 </span>
               }
+              style={{ fontSize: 16 }}
             />
             {hash && !supportStateCleared && (
               <div className="w-full max-w-full">
