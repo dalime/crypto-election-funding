@@ -131,9 +131,11 @@ const SupportModal: React.FC<SupportModalProps> = ({
                 (isPending || isConfirming || isConfirmed)
               }
               description={
-                ethPrices && ethPrices[0].current_price && amount
+                <span data-testid="support-modal-input-usd">
+                  {ethPrices && ethPrices[0].current_price && amount
                   ? `Approx. ${formatToUSD(parseFloat(amount) * ethPrices[0].current_price)}`
-                  : ''
+                  : ''}
+                </span>
               }
             />
             {hash && !supportStateCleared && (

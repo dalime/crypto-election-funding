@@ -26,6 +26,7 @@ const customJestConfig = {
     'next/font/(.*)': `<rootDir>/__mocks__/nextFontMock.js`,
     'server-only': `<rootDir>/__mocks__/empty.js`,
     '^fetch-mock$': 'fetch-mock',
+    '^wagmi$': '<rootDir>/__mocks__/wagmi.js',
   },
   preset: 'ts-jest',
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
