@@ -55,7 +55,7 @@ function CandidateCard({ candidate, contractDetails, feeAmount }: Props) {
   return (
     <Card>
       <CardHeader className="z-0">
-        <h2 className="font-bold text-2xl mt-2">{candidateDetails.name}</h2>
+        <h2 data-testid="candidate-name-h2" className="font-bold text-2xl mt-2">{candidateDetails.name}</h2>
       </CardHeader>
       <CardBody>
         {isClient ? (
@@ -71,7 +71,7 @@ function CandidateCard({ candidate, contractDetails, feeAmount }: Props) {
           </div>
         ) : (
           <div className="flex flex-row justify-between items-start h-full">
-            <div>Loading...</div>
+            <div data-testid="loading-text">Loading...</div>
           </div>
         )}
       </CardBody>
