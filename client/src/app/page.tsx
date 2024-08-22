@@ -49,6 +49,7 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
 
+  // Effects
   useEffect(() => {
     setIsClient(true);
     setIsMobile(window.innerWidth <= 500);
@@ -76,13 +77,18 @@ export default function Home() {
     >
       <ConnectWallet modalOpen={showWallets} setModalOpen={setShowWallets} />
       <div className="z-10 w-full items-center justify-between font-mono text-sm lg:flex">
-        <h1
-          className={`text-xl font-bold left-0 top-0 flex w-full justify-center pb-6 pt-8 lg:static lg:w-auto ${
-            isClient ? (isMobile ? 'hidden' : isTablet ? 'mt-32' : '') : ''
-          }`}
-        >
-          Support a presidential candidate with Crypto!
-        </h1>
+        {isClient && !isMobile && (
+          <div>
+            <h1
+              className={`text-xl font-bold left-0 top-0 flex w-full justify-center pb-6 pt-8 lg:static lg:w-auto ${
+                isClient ? (isMobile ? 'hidden' : isTablet ? 'mt-32' : '') : ''
+              }`}
+            >
+              Support a presidential candidate with Crypto!
+            </h1>
+            <p className="text-red-500">This app is currently only usable with Sepolia Testnet.</p>
+          </div>
+        )}
         <div
           className={`fixed top-0 right-0 flex w-full items-${
             isClient ? (isMobile ? 'center' : 'end') : 'end'
@@ -90,7 +96,7 @@ export default function Home() {
         >
           {isClient && isMobile && (
             <h1 className="text-sma font-bold">
-              Support a presidential candidate with Crypto!
+              Support a candidate with Crypto!
             </h1>
           )}
           {isConnected ? (
@@ -109,6 +115,9 @@ export default function Home() {
           isClient ? (isMobile ? 'mt-32' : 'mt-4') : 'mt-4'
         }`}
       >
+        {isClient && isMobile && (
+          <p className="text-red-500">Currently only usable on Sepolia Testnet</p>
+        )}
         <CandidateCard
           candidate="Trump"
           contractDetails={
