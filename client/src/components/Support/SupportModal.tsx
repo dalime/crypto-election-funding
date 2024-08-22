@@ -98,7 +98,7 @@ const SupportModal: React.FC<SupportModalProps> = ({
   );
 
   return (
-    <Modal data-testid="support-modal" isOpen={true} onOpenChange={onClose}>
+    <Modal placement="center" data-testid="support-modal" isOpen={true} onOpenChange={onClose}>
       <ModalContent>
         <form onSubmit={handleSupport}>
           <ModalHeader className="flex flex-col gap-1">
